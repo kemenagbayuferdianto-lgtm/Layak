@@ -1,21 +1,161 @@
-<p>LAYAK (Layanan Aplikasi Kecamatan)</p>
+body{
 
-<input type="text"
-placeholder="Cari Kecamatan...">
+margin:0;
 
-</section>
+font-family:Segoe UI;
 
-<section class="container">
+background:#f5f6f8;
 
-<div id="cards"
-class="cards">
+}
 
-</div>
+header{
 
-</section>
+display:flex;
 
-<script src="script.js"></script>
+justify-content:space-between;
 
-</body>
+align-items:center;
 
-</html>
+padding:20px 50px;
+
+background:white;
+
+box-shadow:0 3px 10px rgba(0,0,0,.1);
+
+}
+
+.logo-area{
+
+display:flex;
+
+align-items:center;
+
+gap:15px;
+
+}
+
+.logo-area img{
+
+width:60px;
+
+}
+
+nav a{
+
+text-decoration:none;
+
+margin-left:25px;
+
+color:#006633;
+
+font-weight:bold;
+
+}
+
+.hero{
+
+padding:70px;
+
+text-align:center;
+
+background:linear-gradient(135deg,#006633,#0b8b53);
+
+color:white;
+
+}
+
+.hero input{
+
+width:450px;
+
+padding:15px;
+
+border:none;
+
+border-radius:30px;
+
+margin-top:25px;
+
+font-size:16px;
+
+}
+
+.container{
+
+padding:50px;
+
+}
+
+.cards{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+
+gap:30px;
+
+}
+
+.card{
+
+background:white;
+
+border-radius:20px;
+
+overflow:hidden;
+
+box-shadow:0 10px 20px rgba(0,0,0,.08);
+
+transition:.3s;
+
+cursor:pointer;
+
+}
+
+.card:hover{
+
+transform:translateY(-8px);
+
+}
+
+.card img{
+
+width:100%;
+
+height:220px;
+
+object-fit:cover;
+
+}
+
+.info{
+
+padding:20px;
+
+}
+
+.info h3{
+
+margin:0;
+
+color:#006633;
+
+}
+
+.btn{
+
+display:inline-block;
+
+margin-top:15px;
+
+padding:12px 20px;
+
+background:#0a8a53;
+
+color:white;
+
+text-decoration:none;
+
+border-radius:10px;
+
+}
