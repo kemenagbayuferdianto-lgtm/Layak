@@ -40,6 +40,38 @@ foto:"assets/labuan.jpg",
 
 link:"https://sites.google.com/view/kualabuan"
 
+},
+
+  {
+    nama:"KUA Labuan",
+    kepala:"Syarif",
+    alamat:"Kec. Labuan",
+    foto:"assets/labuan.jpg",
+    link:"https://sites.google.com/view/kualabuan"
+},
+
+{
+    nama:"KUA Pandeglang",
+    kepala:"Muhammad Yusuf",
+    alamat:"Kec. Pandeglang",
+    foto:"assets/pandeglang.jpg",
+    link:"https://sites.google.com/view/kuapandeglang"
+},
+
+{
+    nama:"KUA Karangtanjung",
+    kepala:"Abdul Rahman",
+    alamat:"Kec. Karangtanjung",
+    foto:"assets/karangtanjung.jpg",
+    link:"https://sites.google.com/view/kuakarangtanjung"
+},
+
+{
+    nama:"KUA Koroncong",
+    kepala:"H. Ridwan",
+    alamat:"Kec. Koroncong",
+    foto:"assets/koroncong.jpg",
+    link:"https://sites.google.com/view/kuakoroncong"
 }
 
 ];
