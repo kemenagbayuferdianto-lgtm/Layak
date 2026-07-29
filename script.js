@@ -42,14 +42,6 @@ link:"https://sites.google.com/view/kualabuan"
 
 },
 
-  {
-    nama:"KUA Labuan",
-    kepala:"Syarif",
-    alamat:"Kec. Labuan",
-    foto:"assets/labuan.jpg",
-    link:"https://sites.google.com/view/kualabuan"
-},
-
 {
     nama:"KUA Pandeglang",
     kepala:"Muhammad Yusuf",
