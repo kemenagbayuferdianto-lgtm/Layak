@@ -169,3 +169,42 @@ border-radius:10px;
     font-size:15px;
     font-weight:500;
 }
+
+.hero{
+    background:#0a7a3c;
+    padding:60px 20px;
+    text-align:center;
+}
+
+.hero-logo{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:20px;
+    color:white;
+    margin-bottom:40px;
+}
+
+.hero-logo img{
+    width:70px;
+}
+
+.hero-logo h1{
+    margin:0;
+    font-size:42px;
+    font-weight:bold;
+}
+
+.hero-logo p{
+    margin-top:5px;
+    font-size:20px;
+}
+
+.hero input{
+    width:600px;
+    max-width:90%;
+    padding:18px 25px;
+    border-radius:40px;
+    border:none;
+    font-size:20px;
+}
