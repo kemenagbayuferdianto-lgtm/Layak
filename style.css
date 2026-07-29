@@ -1,1 +1,21 @@
+<p>LAYAK (Layanan Aplikasi Kecamatan)</p>
 
+<input type="text"
+placeholder="Cari Kecamatan...">
+
+</section>
+
+<section class="container">
+
+<div id="cards"
+class="cards">
+
+</div>
+
+</section>
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
