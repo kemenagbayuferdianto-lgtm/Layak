@@ -1,60 +1,58 @@
-
 <!DOCTYPE html>
 <html lang="id">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAPA</title>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>SAPA</title>
-
-<link rel="stylesheet" href="style.css">
-
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<header>
+    <!-- HEADER -->
+    <header>
 
-<div class="logo-area">
+        <div class="logo-area">
+            <img src="assets/logo.png" alt="Logo Kementerian Agama">
 
-<img src="assets/logo.png">
+            <div>
+                <h2>SAPA</h2>
+                <p>Sentra Pelayanan Agama</p>
+            </div>
+        </div>
 
-<div>
+        <nav>
+            <a href="#">Beranda</a>
+            <a href="#">Login</a>
+        </nav>
 
-<h2>SAPA</h2>
+    </header>
 
-<p>Sentra Pelayanan Agama</p>
+    <!-- HERO -->
+    <section class="hero">
+        <input
+            type="text"
+            id="search"
+            placeholder="Cari Kecamatan...">
+    </section>
 
-</div>
+    <!-- DAFTAR KUA -->
+    <section class="container">
 
-</div>
+        <div id="cards" class="cards">
+            <!-- Card akan ditampilkan oleh JavaScript -->
+        </div>
 
-<nav>
+    </section>
 
-<a href="#">Beranda</a>
-<a href="#">Login</a>
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>© 2026 SAPA | Sentra Pelayanan Agama Kabupaten Pandeglang</p>
+    </footer>
 
-</nav>
-
-</header>
-
-<section class="hero">
-
-<input type="text"
-placeholder="Cari Kecamatan...">
-
-</section>
-
-<section class="container">
-
-<div id="cards"
-class="cards">
-
-<footer class="footer">
-    <p>© 2026 SAPA | Sentra Pelayanan Agama Kabupaten Pandeglang</p>
-</footer>
+    <script src="script.js"></script>
 
 </body>
 
