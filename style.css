@@ -1,161 +1,211 @@
+/* ==========================
+   RESET
+========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
 body{
 
-margin:0;
+    font-family:"Segoe UI",sans-serif;
 
-font-family:Segoe UI;
+    background:#f5f6f8;
 
-background:#f5f6f8;
-
-}
-
-header{
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-padding:20px 50px;
-
-background:white;
-
-box-shadow:0 3px 10px rgba(0,0,0,.1);
+    color:#333;
 
 }
 
-.logo-area{
+/* ==========================
+   SEARCH
+========================== */
 
-display:flex;
+.search-box{
 
-align-items:center;
+    width:100%;
 
-gap:15px;
+    display:flex;
 
-}
+    justify-content:center;
 
-.logo-area img{
+    padding:20px;
 
-width:60px;
-
-}
-
-nav a{
-
-text-decoration:none;
-
-margin-left:25px;
-
-color:#006633;
-
-font-weight:bold;
+    background:#f5f6f8;
 
 }
 
-.hero{
+.search-box input{
 
-padding:70px;
+    width:650px;
 
-text-align:center;
+    max-width:95%;
 
-background:linear-gradient(135deg,#006633,#0b8b53);
+    padding:16px 22px;
 
-color:white;
+    border:none;
+
+    border-radius:40px;
+
+    font-size:17px;
+
+    outline:none;
+
+    box-shadow:0 6px 18px rgba(0,0,0,.12);
+
+}
+
+.search-box input:focus{
+
+    box-shadow:0 6px 18px rgba(0,102,51,.25);
 
 }
 
-.hero input{
-
-width:450px;
-
-padding:15px;
-
-border:none;
-
-border-radius:30px;
-
-margin-top:25px;
-
-font-size:16px;
-
-}
+/* ==========================
+   CONTAINER
+========================== */
 
 .container{
 
-padding:50px;
+    width:100%;
+
+    max-width:1400px;
+
+    margin:auto;
+
+    padding:10px 20px 30px;
 
 }
+
+/* ==========================
+   CARD GRID
+========================== */
 
 .cards{
 
-display:grid;
+    display:grid;
 
-grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
 
-gap:30px;
+    gap:25px;
 
 }
 
+/* ==========================
+   CARD
+========================== */
+
 .card{
 
-background:white;
+    background:white;
 
-border-radius:20px;
+    border-radius:18px;
 
-overflow:hidden;
+    overflow:hidden;
 
-box-shadow:0 10px 20px rgba(0,0,0,.08);
+    cursor:pointer;
 
-transition:.3s;
+    transition:.3s;
 
-cursor:pointer;
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
 
 }
 
 .card:hover{
 
-transform:translateY(-8px);
+    transform:translateY(-6px);
+
+    box-shadow:0 12px 25px rgba(0,0,0,.15);
 
 }
 
 .card img{
 
-width:100%;
+    width:100%;
 
-height:220px;
+    height:190px;
 
-object-fit:cover;
+    object-fit:cover;
 
 }
 
 .info{
 
-padding:20px;
+    padding:18px;
 
 }
 
 .info h3{
 
-margin:0;
+    color:#006633;
 
-color:#006633;
+    font-size:24px;
+
+    margin-bottom:12px;
+
+}
+
+.info p{
+
+    margin:6px 0;
+
+    font-size:15px;
 
 }
 
 .btn{
 
-display:inline-block;
+    display:inline-block;
 
-margin-top:15px;
+    margin-top:15px;
 
-padding:12px 20px;
+    padding:10px 18px;
 
-background:#0a8a53;
+    background:#0a8a53;
 
-color:white;
+    color:white;
 
-text-decoration:none;
+    text-decoration:none;
 
-border-radius:10px;
+    border-radius:8px;
+
+    transition:.3s;
+
+}
+
+.btn:hover{
+
+    background:#08663d;
+
+}
+
+/* ==========================
+   RESPONSIVE
+========================== */
+
+@media (max-width:900px){
+
+.cards{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+}
+
+@media (max-width:650px){
+
+.cards{
+
+grid-template-columns:1fr;
+
+}
+
+.search-box input{
+
+width:95%;
+
+}
 
 }
