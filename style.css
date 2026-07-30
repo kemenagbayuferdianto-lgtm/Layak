@@ -1,73 +1,75 @@
+/* =========================
+   RESET
+========================= */
+
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif;
+    font-family:Arial, Helvetica, sans-serif;
 }
 
 body{
-    background:#f4f6fb;
-    color:#333;
+    background:#f4f6f9;
 }
 
-/* ================= HEADER ================= */
+
+/* =========================
+   HEADER
+========================= */
 
 .header{
-    background:linear-gradient(135deg,#006B3F,#0c8c56);
+    background:#006B3F;
     color:white;
     text-align:center;
-    padding:35px 20px;
+    padding:45px 20px;
 }
 
 .header h1{
-    font-size:42px;
-    font-weight:700;
+    font-size:48px;
+    margin-bottom:10px;
 }
 
 .header p{
-    margin-top:10px;
-    font-size:18px;
+    font-size:22px;
     opacity:.95;
 }
 
-/* ================= SEARCH ================= */
+
+/* =========================
+   SEARCH
+========================= */
 
 .search-box{
+    width:100%;
     display:flex;
     justify-content:center;
-    margin:30px 0;
+    padding:35px 15px;
 }
 
 .search-box input{
 
-    width:500px;
-    max-width:90%;
+    width:100%;
+    max-width:650px;
 
-    padding:15px 20px;
+    padding:18px 25px;
 
     border-radius:40px;
 
-    border:1px solid #ddd;
-
-    font-size:17px;
+    border:2px solid #0b7d4a;
 
     outline:none;
 
-    box-shadow:0 3px 10px rgba(0,0,0,.08);
+    font-size:18px;
+
+    box-shadow:0 5px 18px rgba(0,0,0,.08);
 
 }
 
-#search{
-    transition:.3s;
-}
 
-#search:focus{
-    outline:none;
-    border:2px solid #006B3F;
-    box-shadow:0 0 15px rgba(0,107,63,.25);
-}
-
-/* ================= CONTAINER ================= */
+/* =========================
+   CONTAINER
+========================= */
 
 .container{
 
@@ -81,43 +83,39 @@ body{
 
 }
 
-/* ================= GRID ================= */
+
+/* =========================
+   GRID CARD
+========================= */
 
 .cards-container{
 
     display:grid;
 
-    grid-template-columns:repeat(auto-fit,minmax(340px,1fr));
+    grid-template-columns:repeat(3,1fr);
 
-    gap:25px;
+    gap:30px;
 
 }
 
-/* ================= CARD ================= */
 
-.card{
-    cursor:pointer;
-}
+/* =========================
+   CARD
+========================= */
 
 .card{
 
     background:white;
 
-    border-radius:18px;
+    border-radius:20px;
 
     overflow:hidden;
 
-    box-shadow:0 10px 25px rgba(0,0,0,.12);
+    box-shadow:0 10px 30px rgba(0,0,0,.12);
 
-    transition:.35s;
+    transition:.3s;
 
-}
-
-.card:hover{
-
-    transform:translateY(-8px);
-
-    box-shadow:0 15px 35px rgba(0,0,0,.18);
+    cursor:pointer;
 
 }
 
@@ -125,21 +123,21 @@ body{
 
     transform:translateY(-8px);
 
-    box-shadow:0 14px 35px rgba(0,0,0,.18);
+    box-shadow:0 18px 40px rgba(0,0,0,.18);
 
 }
+
 
 .card img{
 
     width:100%;
 
-    height:220px;
+    height:240px;
 
     object-fit:cover;
 
 }
 
-/* ================= BODY ================= */
 
 .card-body{
 
@@ -147,51 +145,54 @@ body{
 
 }
 
+
 .card-body h2{
 
     color:#006B3F;
 
-    margin:15px 0;
+    margin:12px 0;
 
     font-size:30px;
 
 }
 
-.card-body p{
 
-    margin:8px 0;
+.card-body p{
 
     color:#555;
 
+    margin-bottom:12px;
+
     line-height:1.6;
 
-    font-size:17px;
+    font-size:18px;
 
 }
 
-/* ================= STATUS ================= */
+
+/* =========================
+   STATUS
+========================= */
 
 .status{
 
     display:inline-block;
 
-    padding:8px 16px;
+    padding:8px 18px;
 
-    border-radius:30px;
+    border-radius:25px;
 
     color:white;
 
-    font-size:13px;
+    font-size:14px;
 
     font-weight:bold;
-
-    margin-bottom:8px;
 
 }
 
 .aktif{
 
-    background:#2db84d;
+    background:#28a745;
 
 }
 
@@ -201,7 +202,10 @@ body{
 
 }
 
-/* ================= BUTTON ================= */
+
+/* =========================
+   BUTTON
+========================= */
 
 .button-group{
 
@@ -209,9 +213,10 @@ body{
 
     gap:12px;
 
-    margin-top:22px;
+    margin-top:20px;
 
 }
+
 
 .btn{
 
@@ -221,11 +226,11 @@ body{
 
     text-decoration:none;
 
-    padding:13px;
+    color:white;
+
+    padding:14px;
 
     border-radius:10px;
-
-    color:white;
 
     font-weight:bold;
 
@@ -239,27 +244,24 @@ body{
 
 }
 
-.maps:hover{
-
-    background:#db8806;
-
-}
-
 .web{
 
     background:#006B3F;
 
 }
 
-.web:hover{
+.btn:hover{
 
-    background:#015431;
+    transform:scale(1.04);
 
 }
 
-/* ================= RESPONSIVE ================= */
 
-@media(max-width:1200px){
+/* =========================
+   TABLET
+========================= */
+
+@media screen and (max-width:1100px){
 
 .cards-container{
 
@@ -267,9 +269,26 @@ grid-template-columns:repeat(2,1fr);
 
 }
 
+.header h1{
+
+font-size:40px;
+
 }
 
-@media(max-width:700px){
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media screen and (max-width:700px){
+
+.cards-container{
+
+grid-template-columns:1fr;
+
+}
 
 .header h1{
 
@@ -279,19 +298,33 @@ font-size:30px;
 
 .header p{
 
-font-size:16px;
+font-size:18px;
 
 }
 
-.cards-container{
+.search-box input{
 
-grid-template-columns:1fr;
+font-size:16px;
+
+padding:15px 20px;
+
+}
+
+.card img{
+
+height:220px;
 
 }
 
 .card-body h2{
 
 font-size:24px;
+
+}
+
+.card-body p{
+
+font-size:16px;
 
 }
 
