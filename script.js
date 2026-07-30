@@ -4,29 +4,14 @@ fetch(API_URL)
 .then(res => res.json())
 .then(data => {
 
-    console.log(data);
-
     const cards = document.getElementById("cards");
-    console.log(cards); // harus bukan null
 
-    let html = "";
+    console.log("cards =", cards);
 
-    data.forEach(kua => {
-
-        html += `
-        <div class="card">
-            <img src="${kua.foto}">
-            <div class="card-body">
-                <h2>${kua.nama}</h2>
-            </div>
+    cards.innerHTML = `
+        <div style="background:red;color:white;padding:30px;font-size:30px">
+            TEST BERHASIL
         </div>
-        `;
+    `;
 
-    });
-
-    cards.innerHTML = html;
-
-    console.log(cards.innerHTML);
-
-})
-.catch(err => console.error(err));
+});
