@@ -2,135 +2,130 @@ const API_URL = "https://script.google.com/macros/s/AKfycbyiWpRPO7c0vqWlJvjOjtMH
 
 let semuaData = [];
 
-// =========================
-// Ambil Data Spreadsheet
-// =========================
-
+// ==========================
+// AMBIL DATA
+// ==========================
 fetch(API_URL)
-.then(response => response.json())
-.then(data => {
+  .then(response => response.json())
+  .then(data => {
 
     semuaData = data;
-
     tampilkanData(semuaData);
 
-    aktifkanPencarian();
+  })
+  .catch(error => {
 
-})
-.catch(err => {
-
-    console.error(err);
+    console.error(error);
 
     document.getElementById("cards").innerHTML =
-    "<h2 style='text-align:center'>Data gagal dimuat.</h2>";
+      "<h2 style='text-align:center;color:red'>Data gagal dimuat.</h2>";
 
-});
+  });
 
 
-// =========================
-// Menampilkan Card
-// =========================
+// ==========================
+// TAMPILKAN CARD
+// ==========================
 
 function tampilkanData(data){
 
-    const cards = document.getElementById("cards");
+  let html = "";
 
-    if(data.length==0){
+  data.forEach(kua => {
 
-        cards.innerHTML=`
-        <div style="
-            width:100%;
-            text-align:center;
-            padding:50px;
-            font-size:22px;
-            color:#777;">
-            Data tidak ditemukan
-        </div>
-        `;
+    html += `
 
-        return;
-    }
+    <div class="card"
+         onclick="bukaWebsite('${kua.link}')">
 
-    let html="";
+      <img src="${kua.foto}" alt="${kua.nama}">
 
-    data.forEach(kua=>{
+      <div class="card-body">
 
-        html+=`
+        <span class="status ${kua.status === "AKTIF" ? "aktif" : "nonaktif"}">
+          ${kua.status}
+        </span>
 
-        <div class="card">
+        <h2>${kua.nama}</h2>
 
-            <img src="${kua.foto}" alt="${kua.nama}">
+        <p><strong>${kua.kepala}</strong></p>
 
-            <div class="card-body">
+        <p>📍 ${kua.alamat}</p>
 
-                <span class="status ${kua.status==="AKTIF"?"aktif":"nonaktif"}">
-                    ${kua.status}
-                </span>
+        <p>☎ ${kua.telepon}</p>
 
-                <h2>${kua.nama}</h2>
+        <p>✉ ${kua.email}</p>
 
-                <p><strong>${kua.kepala}</strong></p>
+        <div class="button-group">
 
-                <p>📍 ${kua.alamat}</p>
+          <a
+            href="${kua.maps}"
+            target="_blank"
+            class="btn maps"
+            onclick="event.stopPropagation();">
+            Maps
+          </a>
 
-                <p>☎️ ${kua.telepon}</p>
-
-                <p>✉️ ${kua.email}</p>
-
-                <div class="button-group">
-
-                    <a href="${kua.maps}" target="_blank" class="btn maps">
-                        Maps
-                    </a>
-
-                    <a href="${kua.link}" target="_blank" class="btn web">
-                        Website
-                    </a>
-
-                </div>
-
-            </div>
+          <a
+            href="${kua.link}"
+            target="_blank"
+            class="btn web"
+            onclick="event.stopPropagation();">
+            Website
+          </a>
 
         </div>
 
-        `;
+      </div>
 
-    });
+    </div>
 
-    cards.innerHTML=html;
+    `;
+
+  });
+
+  document.getElementById("cards").innerHTML = html;
 
 }
 
 
+// ==========================
+// CARD KLIK
+// ==========================
 
-// =========================
-// Fitur Search
-// =========================
+function bukaWebsite(link){
 
-function aktifkanPencarian(){
+  if(link && link.trim() !== ""){
 
-    const input=document.getElementById("search");
+    window.open(link,"_blank");
 
-    input.addEventListener("input",function(){
+  }else{
 
-        const keyword=this.value.toLowerCase().trim();
+    alert("Website KUA belum tersedia.");
 
-        const hasil=semuaData.filter(kua=>{
-
-            return (
-
-                (kua.nama || "").toLowerCase().includes(keyword) ||
-
-                (kua.alamat || "").toLowerCase().includes(keyword) ||
-
-                (kua.kepala || "").toLowerCase().includes(keyword)
-
-            );
-
-        });
-
-        tampilkanData(hasil);
-
-    });
+  }
 
 }
+
+
+// ==========================
+// FITUR PENCARIAN
+// ==========================
+
+document.getElementById("search").addEventListener("keyup", function(){
+
+  const keyword = this.value.toLowerCase();
+
+  const hasil = semuaData.filter(kua =>
+
+      kua.nama.toLowerCase().includes(keyword) ||
+
+      kua.alamat.toLowerCase().includes(keyword) ||
+
+      kua.kepala.toLowerCase().includes(keyword)
+
+  );
+
+  tampilkanData(hasil);
+
+});
