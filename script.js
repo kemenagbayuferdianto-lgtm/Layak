@@ -2,89 +2,135 @@ const API_URL = "https://script.google.com/macros/s/AKfycbyiWpRPO7c0vqWlJvjOjtMH
 
 let semuaData = [];
 
-// Ambil data dari Spreadsheet
+// =========================
+// Ambil Data Spreadsheet
+// =========================
+
 fetch(API_URL)
-  .then(res => res.json())
-  .then(data => {
+.then(response => response.json())
+.then(data => {
+
     semuaData = data;
+
     tampilkanData(semuaData);
-  })
-  .catch(err => {
+
+    aktifkanPencarian();
+
+})
+.catch(err => {
+
     console.error(err);
+
     document.getElementById("cards").innerHTML =
-      "<h3>Data gagal dimuat.</h3>";
-  });
+    "<h2 style='text-align:center'>Data gagal dimuat.</h2>";
+
+});
 
 
-// Fungsi menampilkan card
-function tampilkanData(data) {
+// =========================
+// Menampilkan Card
+// =========================
 
-  let html = "";
+function tampilkanData(data){
 
-  data.forEach(kua => {
+    const cards = document.getElementById("cards");
 
-    html += `
-      <div class="card">
+    if(data.length==0){
 
-        <img src="${kua.foto}" alt="${kua.nama}">
+        cards.innerHTML=`
+        <div style="
+            width:100%;
+            text-align:center;
+            padding:50px;
+            font-size:22px;
+            color:#777;">
+            Data tidak ditemukan
+        </div>
+        `;
 
-        <div class="card-body">
+        return;
+    }
 
-          <span class="status ${kua.status === "AKTIF" ? "aktif" : "nonaktif"}">
-            ${kua.status}
-          </span>
+    let html="";
 
-          <h2>${kua.nama}</h2>
+    data.forEach(kua=>{
 
-          <p><strong>${kua.kepala}</strong></p>
+        html+=`
 
-          <p>📍 ${kua.alamat}</p>
+        <div class="card">
 
-          <p>☎️ ${kua.telepon}</p>
+            <img src="${kua.foto}" alt="${kua.nama}">
 
-          <p>✉️ ${kua.email}</p>
+            <div class="card-body">
 
-          <div class="button-group">
+                <span class="status ${kua.status==="AKTIF"?"aktif":"nonaktif"}">
+                    ${kua.status}
+                </span>
 
-            <a href="${kua.maps}" target="_blank" class="btn maps">
-              Maps
-            </a>
+                <h2>${kua.nama}</h2>
 
-            <a href="${kua.link}" target="_blank" class="btn web">
-              Website
-            </a>
+                <p><strong>${kua.kepala}</strong></p>
 
-          </div>
+                <p>📍 ${kua.alamat}</p>
+
+                <p>☎️ ${kua.telepon}</p>
+
+                <p>✉️ ${kua.email}</p>
+
+                <div class="button-group">
+
+                    <a href="${kua.maps}" target="_blank" class="btn maps">
+                        Maps
+                    </a>
+
+                    <a href="${kua.link}" target="_blank" class="btn web">
+                        Website
+                    </a>
+
+                </div>
+
+            </div>
 
         </div>
 
-      </div>
-    `;
-  });
+        `;
 
-  document.getElementById("cards").innerHTML = html;
+    });
+
+    cards.innerHTML=html;
 
 }
 
 
-// ==========================
-// FITUR SEARCH
-// ==========================
 
-document.getElementById("search").addEventListener("keyup", function () {
+// =========================
+// Fitur Search
+// =========================
 
-  const keyword = this.value.toLowerCase();
+function aktifkanPencarian(){
 
-  const hasil = semuaData.filter(kua =>
+    const input=document.getElementById("search");
 
-    kua.nama.toLowerCase().includes(keyword) ||
+    input.addEventListener("input",function(){
 
-    kua.alamat.toLowerCase().includes(keyword) ||
+        const keyword=this.value.toLowerCase().trim();
 
-    kua.kepala.toLowerCase().includes(keyword)
+        const hasil=semuaData.filter(kua=>{
 
-  );
+            return (
 
-  tampilkanData(hasil);
+                (kua.nama || "").toLowerCase().includes(keyword) ||
 
-});
+                (kua.alamat || "").toLowerCase().includes(keyword) ||
+
+                (kua.kepala || "").toLowerCase().includes(keyword)
+
+            );
+
+        });
+
+        tampilkanData(hasil);
+
+    });
+
+}
