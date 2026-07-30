@@ -4,14 +4,19 @@ fetch(API_URL)
 .then(res => res.json())
 .then(data => {
 
-    const cards = document.getElementById("cards");
+    console.log(data);
 
-    console.log("cards =", cards);
-
-    cards.innerHTML = `
-        <div style="background:red;color:white;padding:30px;font-size:30px">
-            TEST BERHASIL
+    document.getElementById("cards").innerHTML = `
+        <div style="
+            background:green;
+            color:white;
+            padding:30px;
+            font-size:30px;">
+            DATA = ${data.length}
         </div>
     `;
 
+})
+.catch(err=>{
+    console.log(err);
 });
