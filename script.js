@@ -1,63 +1,57 @@
-const API_URL = "MASUKKAN_URL_APPS_SCRIPT_EXEC_DISINI";
+const API_URL = "URL_APPS_SCRIPT_ANDA";
 
 fetch(API_URL)
-  .then(response => response.json())
-  .then(data => {
+.then(res=>res.json())
+.then(data=>{
 
-    let html = "";
+    let html="";
 
-    data.forEach(kua => {
+    data.forEach(kua=>{
 
-      html += `
-      <div class="card">
+        html+=`
 
-          <img src="${kua.foto}" class="card-img">
+        <div class="card">
 
-          <div class="card-body">
+            <img src="${kua.foto}" alt="${kua.nama}">
 
-              <span class="status ${kua.status === 'AKTIF' ? 'aktif' : 'nonaktif'}">
-                  ${kua.status}
-              </span>
+            <div class="card-body">
 
-              <h2>${kua.nama}</h2>
+                <span class="status ${kua.status=='AKTIF'?'aktif':'nonaktif'}">
 
-              <p>
-                  <strong>Kepala KUA</strong><br>
-                  ${kua.kepala}
-              </p>
+                    ${kua.status}
 
-              <p>
-                  📍 ${kua.alamat}
-              </p>
+                </span>
 
-              <p>
-                  ☎️ ${kua.telepon}
-              </p>
+                <h2>${kua.nama}</h2>
 
-              <p>
-                  ✉️ ${kua.email}
-              </p>
+                <p><strong>Kepala KUA</strong><br>${kua.kepala}</p>
 
-              <div class="button-group">
+                <p>📍 ${kua.alamat}</p>
 
-                  <a href="${kua.maps}" target="_blank" class="btn maps">
-                      Maps
-                  </a>
+                <p>☎️ ${kua.telepon}</p>
 
-                  <a href="${kua.link}" target="_blank" class="btn web">
-                      Website
-                  </a>
+                <p>✉️ ${kua.email}</p>
 
-              </div>
+                <div class="button-group">
 
-          </div>
+                    <a href="${kua.maps}" target="_blank" class="btn maps">
+                        Maps
+                    </a>
 
-      </div>
-      `;
+                    <a href="${kua.link}" target="_blank" class="btn web">
+                        Website
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        `;
 
     });
 
-    document.getElementById("cards").innerHTML = html;
+    document.getElementById("cards").innerHTML=html;
 
-  })
-  .catch(error => console.log(error));
+});
