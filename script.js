@@ -1,48 +1,90 @@
 const API_URL = "https://script.google.com/macros/s/AKfycbyiWpRPO7c0vqWlJvjOjtMH8RGkAIav9y3wC-_F1zDscQSnHWBt5uaSbZqhNYmDEMdr/exec";
 
+let semuaData = [];
+
+// Ambil data dari Spreadsheet
 fetch(API_URL)
-.then(res => res.json())
-.then(data => {
+  .then(res => res.json())
+  .then(data => {
+    semuaData = data;
+    tampilkanData(semuaData);
+  })
+  .catch(err => {
+    console.error(err);
+    document.getElementById("cards").innerHTML =
+      "<h3>Data gagal dimuat.</h3>";
+  });
 
-    console.log(data);
 
-    const cards = document.getElementById("cards");
+// Fungsi menampilkan card
+function tampilkanData(data) {
 
-    cards.innerHTML = "";
+  let html = "";
 
-    data.forEach(kua => {
+  data.forEach(kua => {
 
-        cards.innerHTML += `
-        <div class="card">
+    html += `
+      <div class="card">
 
-            <img src="${kua.foto}" alt="${kua.nama}">
+        <img src="${kua.foto}" alt="${kua.nama}">
 
-            <div class="card-body">
+        <div class="card-body">
 
-                <span class="status aktif">
-                    ${kua.status}
-                </span>
+          <span class="status ${kua.status === "AKTIF" ? "aktif" : "nonaktif"}">
+            ${kua.status}
+          </span>
 
-                <h2>${kua.nama}</h2>
+          <h2>${kua.nama}</h2>
 
-                <p>${kua.kepala}</p>
+          <p><strong>${kua.kepala}</strong></p>
 
-                <p>${kua.alamat}</p>
+          <p>📍 ${kua.alamat}</p>
 
-                <p>${kua.telepon}</p>
+          <p>☎️ ${kua.telepon}</p>
 
-                <p>${kua.email}</p>
+          <p>✉️ ${kua.email}</p>
 
-            </div>
+          <div class="button-group">
+
+            <a href="${kua.maps}" target="_blank" class="btn maps">
+              Maps
+            </a>
+
+            <a href="${kua.link}" target="_blank" class="btn web">
+              Website
+            </a>
+
+          </div>
 
         </div>
-        `;
 
-    });
+      </div>
+    `;
+  });
 
-})
-.catch(err => {
+  document.getElementById("cards").innerHTML = html;
 
-    console.error(err);
+}
+
+
+// ==========================
+// FITUR SEARCH
+// ==========================
+
+document.getElementById("search").addEventListener("keyup", function () {
+
+  const keyword = this.value.toLowerCase();
+
+  const hasil = semuaData.filter(kua =>
+
+    kua.nama.toLowerCase().includes(keyword) ||
+
+    kua.alamat.toLowerCase().includes(keyword) ||
+
+    kua.kepala.toLowerCase().includes(keyword)
+
+  );
+
+  tampilkanData(hasil);
 
 });
