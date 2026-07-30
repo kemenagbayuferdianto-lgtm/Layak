@@ -1,267 +1,240 @@
-/* =========================
-   RESET
-========================= */
+/* ==========================
+RESET
+========================== */
 
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial, Helvetica, sans-serif;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,Helvetica,sans-serif;
 }
 
 body{
-    background:#f4f6f9;
+
+background:#f5f6fa;
+
+padding:20px 10px;
+
 }
 
 
-/* =========================
-   HEADER
-========================= */
-
-.header{
-    background:#006B3F;
-    color:white;
-    text-align:center;
-    padding:45px 20px;
-}
-
-.header h1{
-    font-size:48px;
-    margin-bottom:10px;
-}
-
-.header p{
-    font-size:22px;
-    opacity:.95;
-}
-
-
-/* =========================
-   SEARCH
-========================= */
+/* ==========================
+SEARCH
+========================== */
 
 .search-box{
-    width:100%;
-    display:flex;
-    justify-content:center;
-    padding:35px 15px;
+
+display:flex;
+
+justify-content:center;
+
+margin-bottom:30px;
+
 }
 
 .search-box input{
 
-    width:100%;
-    max-width:650px;
+width:100%;
 
-    padding:18px 25px;
+max-width:520px;
 
-    border-radius:40px;
+padding:14px 22px;
 
-    border:2px solid #0b7d4a;
+font-size:16px;
 
-    outline:none;
+border-radius:35px;
 
-    font-size:18px;
+border:2px solid #0b7d4a;
 
-    box-shadow:0 5px 18px rgba(0,0,0,.08);
+outline:none;
+
+box-shadow:0 5px 15px rgba(0,0,0,.08);
 
 }
 
 
-/* =========================
-   CONTAINER
-========================= */
+/* ==========================
+CONTAINER
+========================== */
 
 .container{
 
-    width:95%;
+max-width:1400px;
 
-    max-width:1500px;
-
-    margin:auto;
-
-    padding-bottom:40px;
+margin:auto;
 
 }
 
 
-/* =========================
-   GRID CARD
-========================= */
+/* ==========================
+GRID
+========================== */
 
 .cards-container{
 
-    display:grid;
+display:grid;
 
-    grid-template-columns:repeat(3,1fr);
+grid-template-columns:repeat(3,1fr);
 
-    gap:30px;
+gap:20px;
 
 }
 
 
-/* =========================
-   CARD
-========================= */
+/* ==========================
+CARD
+========================== */
 
 .card{
 
-    background:white;
+background:white;
 
-    border-radius:20px;
+border-radius:18px;
 
-    overflow:hidden;
+overflow:hidden;
 
-    box-shadow:0 10px 30px rgba(0,0,0,.12);
+box-shadow:0 8px 20px rgba(0,0,0,.10);
 
-    transition:.3s;
+transition:.3s;
 
-    cursor:pointer;
+cursor:pointer;
+
+text-decoration:none;
+
+color:inherit;
+
+display:block;
 
 }
 
 .card:hover{
 
-    transform:translateY(-8px);
+transform:translateY(-8px);
 
-    box-shadow:0 18px 40px rgba(0,0,0,.18);
+box-shadow:0 15px 30px rgba(0,0,0,.18);
 
 }
 
 
 .card img{
 
-    width:100%;
+width:100%;
 
-    height:240px;
+height:180px;
 
-    object-fit:cover;
+object-fit:cover;
 
 }
 
 
 .card-body{
 
-    padding:22px;
+padding:18px;
+
+}
+
+
+.status{
+
+display:inline-block;
+
+padding:6px 14px;
+
+border-radius:30px;
+
+background:#28a745;
+
+color:white;
+
+font-size:12px;
+
+font-weight:bold;
+
+margin-bottom:12px;
+
+}
+
+
+.nonaktif{
+
+background:#dc3545;
 
 }
 
 
 .card-body h2{
 
-    color:#006B3F;
+font-size:20px;
 
-    margin:12px 0;
+color:#006B3F;
 
-    font-size:30px;
+margin-bottom:12px;
 
 }
 
 
 .card-body p{
 
-    color:#555;
+font-size:15px;
 
-    margin-bottom:12px;
+line-height:1.6;
 
-    line-height:1.6;
+margin-bottom:8px;
 
-    font-size:18px;
-
-}
-
-
-/* =========================
-   STATUS
-========================= */
-
-.status{
-
-    display:inline-block;
-
-    padding:8px 18px;
-
-    border-radius:25px;
-
-    color:white;
-
-    font-size:14px;
-
-    font-weight:bold;
+color:#555;
 
 }
 
-.aktif{
-
-    background:#28a745;
-
-}
-
-.nonaktif{
-
-    background:#dc3545;
-
-}
-
-
-/* =========================
-   BUTTON
-========================= */
 
 .button-group{
 
-    display:flex;
+display:flex;
 
-    gap:12px;
+gap:10px;
 
-    margin-top:20px;
+margin-top:15px;
 
 }
 
 
 .btn{
 
-    flex:1;
+flex:1;
 
-    text-align:center;
+padding:10px;
 
-    text-decoration:none;
+border-radius:8px;
 
-    color:white;
+text-align:center;
 
-    padding:14px;
+text-decoration:none;
 
-    border-radius:10px;
+color:white;
 
-    font-weight:bold;
+font-size:14px;
 
-    transition:.3s;
+font-weight:bold;
 
 }
 
 .maps{
 
-    background:#f39c12;
+background:#f39c12;
 
 }
 
 .web{
 
-    background:#006B3F;
-
-}
-
-.btn:hover{
-
-    transform:scale(1.04);
+background:#006B3F;
 
 }
 
 
-/* =========================
-   TABLET
-========================= */
+/* ==========================
+TABLET
+========================== */
 
-@media screen and (max-width:1100px){
+@media(max-width:950px){
 
 .cards-container{
 
@@ -269,20 +242,14 @@ grid-template-columns:repeat(2,1fr);
 
 }
 
-.header h1{
-
-font-size:40px;
-
-}
-
 }
 
 
-/* =========================
-   MOBILE
-========================= */
+/* ==========================
+HP
+========================== */
 
-@media screen and (max-width:700px){
+@media(max-width:600px){
 
 .cards-container{
 
@@ -290,41 +257,9 @@ grid-template-columns:1fr;
 
 }
 
-.header h1{
-
-font-size:30px;
-
-}
-
-.header p{
-
-font-size:18px;
-
-}
-
 .search-box input{
 
-font-size:16px;
-
-padding:15px 20px;
-
-}
-
-.card img{
-
-height:220px;
-
-}
-
-.card-body h2{
-
-font-size:24px;
-
-}
-
-.card-body p{
-
-font-size:16px;
+max-width:100%;
 
 }
 
