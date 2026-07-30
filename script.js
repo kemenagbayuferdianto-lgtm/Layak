@@ -1,101 +1,63 @@
-const data=[
+const API_URL = "MASUKKAN_URL_APPS_SCRIPT_EXEC_DISINI";
 
-{
+fetch(API_URL)
+  .then(response => response.json())
+  .then(data => {
 
-nama:"KUA Cadasari",
+    let html = "";
 
-kepala:"Ahmad Fauzi",
+    data.forEach(kua => {
 
-alamat:"Kec. Cadasari",
+      html += `
+      <div class="card">
 
-foto:"assets/cadasari.jpg",
+          <img src="${kua.foto}" class="card-img">
 
-link:"https://sites.google.com/view/kuacadasari"
+          <div class="card-body">
 
-},
+              <span class="status ${kua.status === 'AKTIF' ? 'aktif' : 'nonaktif'}">
+                  ${kua.status}
+              </span>
 
-{
+              <h2>${kua.nama}</h2>
 
-nama:"KUA Menes",
+              <p>
+                  <strong>Kepala KUA</strong><br>
+                  ${kua.kepala}
+              </p>
 
-kepala:"Abdullah",
+              <p>
+                  📍 ${kua.alamat}
+              </p>
 
-alamat:"Kec. Menes",
+              <p>
+                  ☎️ ${kua.telepon}
+              </p>
 
-foto:"assets/menes.jpg",
+              <p>
+                  ✉️ ${kua.email}
+              </p>
 
-link:"https://sites.google.com/view/kuamenes"
+              <div class="button-group">
 
-},
+                  <a href="${kua.maps}" target="_blank" class="btn maps">
+                      Maps
+                  </a>
 
-{
+                  <a href="${kua.link}" target="_blank" class="btn web">
+                      Website
+                  </a>
 
-nama:"KUA Labuan",
+              </div>
 
-kepala:"Syarif",
+          </div>
 
-alamat:"Kec. Labuan",
+      </div>
+      `;
 
-foto:"assets/labuan.jpg",
+    });
 
-link:"https://sites.google.com/view/kualabuan"
+    document.getElementById("cards").innerHTML = html;
 
-},
-
-{
-    nama:"KUA Pandeglang",
-    kepala:"Muhammad Yusuf",
-    alamat:"Kec. Pandeglang",
-    foto:"assets/pandeglang.jpg",
-    link:"https://sites.google.com/view/kuapandeglang"
-},
-
-{
-    nama:"KUA Karangtanjung",
-    kepala:"Abdul Rahman",
-    alamat:"Kec. Karangtanjung",
-    foto:"assets/karangtanjung.jpg",
-    link:"https://sites.google.com/view/kuakarangtanjung"
-},
-
-{
-    nama:"KUA Koroncong",
-    kepala:"H. Ridwan",
-    alamat:"Kec. Koroncong",
-    foto:"assets/koroncong.jpg",
-    link:"https://sites.google.com/view/kuakoroncong"
-}
-
-];
-
-let html="";
-
-data.forEach(k=>{
-
-html+=`
-
-<div class="card"
-
-onclick="window.open('${k.link}','_blank')">
-
-<img src="${k.foto}">
-
-<div class="info">
-
-<h3>${k.nama}</h3>
-
-<p>👤 ${k.kepala}</p>
-
-<p>📍 ${k.alamat}</p>
-
-<a class="btn">Kunjungi</a>
-
-</div>
-
-</div>
-
-`;
-
-});
-
-document.getElementById("cards").innerHTML=html;
+  })
+  .catch(error => console.log(error));
