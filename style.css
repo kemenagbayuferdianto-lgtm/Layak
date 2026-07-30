@@ -1,24 +1,86 @@
-/* =======================
-Container
-======================= */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
 
 body{
 
-    margin:0;
-
-    background:#f5f7fa;
-
-    font-family:Arial,Helvetica,sans-serif;
+    background:#f4f6f9;
 
 }
 
-.cards-container{
+/* Header */
 
-    max-width:1400px;
+.header{
+
+    background:#006B3F;
+
+    color:white;
+
+    text-align:center;
+
+    padding:35px;
+
+}
+
+.header h1{
+
+    font-size:36px;
+
+}
+
+.header p{
+
+    margin-top:10px;
+
+    font-size:18px;
+
+}
+
+
+/* Search */
+
+.search-box{
+
+    text-align:center;
+
+    padding:30px;
+
+}
+
+.search-box input{
+
+    width:500px;
+
+    max-width:90%;
+
+    padding:14px;
+
+    border-radius:12px;
+
+    border:1px solid #ccc;
+
+    font-size:16px;
+
+}
+
+
+/* Container */
+
+.container{
+
+    width:95%;
 
     margin:auto;
 
-    padding:35px;
+}
+
+
+/* Card */
+
+.cards-container{
 
     display:grid;
 
@@ -26,24 +88,21 @@ body{
 
     gap:30px;
 
+    margin-bottom:40px;
+
 }
-
-
-/* =======================
-CARD
-======================= */
 
 .card{
 
     background:white;
 
-    border-radius:20px;
+    border-radius:18px;
 
     overflow:hidden;
 
-    box-shadow:0 10px 25px rgba(0,0,0,.12);
+    box-shadow:0 8px 20px rgba(0,0,0,.12);
 
-    transition:.35s;
+    transition:.3s;
 
 }
 
@@ -51,12 +110,9 @@ CARD
 
     transform:translateY(-8px);
 
-    box-shadow:0 15px 35px rgba(0,0,0,.18);
-
 }
 
-
-.card-img{
+.card img{
 
     width:100%;
 
@@ -66,63 +122,56 @@ CARD
 
 }
 
-
 .card-body{
 
-    padding:22px;
+    padding:20px;
 
 }
-
 
 .card-body h2{
 
-    margin-top:15px;
+    color:#006B3F;
 
-    color:#0b5d3b;
-
-    font-size:24px;
+    margin-bottom:15px;
 
 }
-
 
 .card-body p{
 
+    margin-bottom:10px;
+
     color:#555;
 
-    line-height:1.6;
-
-    font-size:15px;
+    line-height:1.5;
 
 }
 
 
-/* =======================
-STATUS
-======================= */
+/* Status */
 
 .status{
 
     display:inline-block;
 
-    padding:6px 15px;
+    padding:6px 14px;
 
-    border-radius:30px;
+    border-radius:20px;
 
     color:white;
 
-    font-weight:bold;
-
     font-size:13px;
 
-}
+    margin-bottom:12px;
 
+    font-weight:bold;
+
+}
 
 .aktif{
 
     background:#28a745;
 
 }
-
 
 .nonaktif{
 
@@ -131,20 +180,17 @@ STATUS
 }
 
 
-/* =======================
-BUTTON
-======================= */
+/* Button */
 
 .button-group{
-
-    margin-top:20px;
 
     display:flex;
 
     gap:10px;
 
-}
+    margin-top:20px;
 
+}
 
 .btn{
 
@@ -158,12 +204,11 @@ BUTTON
 
     padding:12px;
 
-    border-radius:10px;
+    border-radius:8px;
 
     font-weight:bold;
 
 }
-
 
 .maps{
 
@@ -171,13 +216,11 @@ BUTTON
 
 }
 
-
 .web{
 
     background:#006B3F;
 
 }
-
 
 .btn:hover{
 
@@ -186,9 +229,7 @@ BUTTON
 }
 
 
-/* =======================
-RESPONSIVE
-======================= */
+/* Responsive */
 
 @media(max-width:1000px){
 
@@ -199,7 +240,6 @@ grid-template-columns:repeat(2,1fr);
 }
 
 }
-
 
 @media(max-width:700px){
 
