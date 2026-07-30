@@ -1,21 +1,48 @@
 const API_URL = "https://script.google.com/macros/s/AKfycbyiWpRPO7c0vqWlJvjOjtMH8RGkAIav9y3wC-_F1zDscQSnHWBt5uaSbZqhNYmDEMdr/exec";
 
-console.log("Script berhasil dijalankan");
-
 fetch(API_URL)
-.then(response => {
-    console.log("Status:", response.status);
-    return response.json();
-})
+.then(res => res.json())
 .then(data => {
 
-    console.log("Isi data:", data);
-    console.log("Jumlah:", data.length);
+    console.log(data);
 
-    document.getElementById("cards").innerHTML =
-        `<h1 style="color:red">DATA = ${data.length}</h1>`;
+    const cards = document.getElementById("cards");
+
+    cards.innerHTML = "";
+
+    data.forEach(kua => {
+
+        cards.innerHTML += `
+        <div class="card">
+
+            <img src="${kua.foto}" alt="${kua.nama}">
+
+            <div class="card-body">
+
+                <span class="status aktif">
+                    ${kua.status}
+                </span>
+
+                <h2>${kua.nama}</h2>
+
+                <p>${kua.kepala}</p>
+
+                <p>${kua.alamat}</p>
+
+                <p>${kua.telepon}</p>
+
+                <p>${kua.email}</p>
+
+            </div>
+
+        </div>
+        `;
+
+    });
 
 })
-.catch(error => {
-    console.error("ERROR :", error);
+.catch(err => {
+
+    console.error(err);
+
 });
