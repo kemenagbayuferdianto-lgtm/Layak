@@ -1,101 +1,131 @@
-const data=[
+const API_URL = "https://script.google.com/macros/s/AKfycbyiWpRPO7c0vqWlJvjOjtMH8RGkAIav9y3wC-_F1zDscQSnHWBt5uaSbZqhNYmDEMdr/exec";
 
-{
+let semuaData = [];
 
-nama:"KUA Cadasari",
+// ==========================
+// AMBIL DATA
+// ==========================
+fetch(API_URL)
+  .then(response => response.json())
+  .then(data => {
 
-kepala:"Ahmad Fauzi",
+    semuaData = data;
+    tampilkanData(semuaData);
 
-alamat:"Kec. Cadasari",
+  })
+  .catch(error => {
 
-foto:"assets/cadasari.jpg",
+    console.error(error);
 
-link:"https://sites.google.com/view/kuacadasari"
+    document.getElementById("cards").innerHTML =
+      "<h2 style='text-align:center;color:red'>Data gagal dimuat.</h2>";
 
-},
+  });
 
-{
 
-nama:"KUA Menes",
+// ==========================
+// TAMPILKAN CARD
+// ==========================
 
-kepala:"Abdullah",
+function tampilkanData(data){
 
-alamat:"Kec. Menes",
+  let html = "";
 
-foto:"assets/menes.jpg",
+  data.forEach(kua => {
 
-link:"https://sites.google.com/view/kuamenes"
+    html += `
 
-},
+    <div class="card"
+         onclick="bukaWebsite('${kua.link}')">
 
-{
+      <img src="${kua.foto}" alt="${kua.nama}">
 
-nama:"KUA Labuan",
+      <div class="card-body">
 
-kepala:"Syarif",
+        <span class="status ${kua.status === "AKTIF" ? "aktif" : "nonaktif"}">
+          ${kua.status}
+        </span>
 
-alamat:"Kec. Labuan",
+        <h2>${kua.nama}</h2>
 
-foto:"assets/labuan.jpg",
+        <p><strong>${kua.kepala}</strong></p>
 
-link:"https://sites.google.com/view/kualabuan"
+        <p>📍 ${kua.alamat}</p>
 
-},
+        <p>☎ ${kua.telepon}</p>
 
-{
-    nama:"KUA Pandeglang",
-    kepala:"Muhammad Yusuf",
-    alamat:"Kec. Pandeglang",
-    foto:"assets/pandeglang.jpg",
-    link:"https://sites.google.com/view/kuapandeglang"
-},
+        <p>✉ ${kua.email}</p>
 
-{
-    nama:"KUA Karangtanjung",
-    kepala:"Abdul Rahman",
-    alamat:"Kec. Karangtanjung",
-    foto:"assets/karangtanjung.jpg",
-    link:"https://sites.google.com/view/kuakarangtanjung"
-},
+        <div class="button-group">
 
-{
-    nama:"KUA Koroncong",
-    kepala:"H. Ridwan",
-    alamat:"Kec. Koroncong",
-    foto:"assets/koroncong.jpg",
-    link:"https://sites.google.com/view/kuakoroncong"
+          <a
+            href="${kua.maps}"
+            target="_blank"
+            class="btn maps"
+            onclick="event.stopPropagation();">
+            Maps
+          </a>
+
+          <a
+            href="${kua.link}"
+            target="_blank"
+            class="btn web"
+            onclick="event.stopPropagation();">
+            Website
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    `;
+
+  });
+
+  document.getElementById("cards").innerHTML = html;
+
 }
 
-];
 
-let html="";
+// ==========================
+// CARD KLIK
+// ==========================
 
-data.forEach(k=>{
+function bukaWebsite(link){
 
-html+=`
+  if(link && link.trim() !== ""){
 
-<div class="card"
+    window.open(link,"_blank");
 
-onclick="window.open('${k.link}','_blank')">
+  }else{
 
-<img src="${k.foto}">
+    alert("Website KUA belum tersedia.");
 
-<div class="info">
+  }
 
-<h3>${k.nama}</h3>
+}
 
-<p>👤 ${k.kepala}</p>
 
-<p>📍 ${k.alamat}</p>
+// ==========================
+// FITUR PENCARIAN
+// ==========================
 
-<a class="btn">Kunjungi</a>
+document.getElementById("search").addEventListener("keyup", function(){
 
-</div>
+  const keyword = this.value.toLowerCase();
 
-</div>
+  const hasil = semuaData.filter(kua =>
 
-`;
+      kua.nama.toLowerCase().includes(keyword) ||
+
+      kua.alamat.toLowerCase().includes(keyword) ||
+
+      kua.kepala.toLowerCase().includes(keyword)
+
+  );
+
+  tampilkanData(hasil);
 
 });
-
-document.getElementById("cards").innerHTML=html;
