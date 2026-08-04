@@ -74,7 +74,7 @@ function renderHalaman(){
       html += `
 
       <div class="card"
-           onclick="bukaWebsite('${kua.link}')">
+           onclick="location.href='layanan.html?id=${kua.id}'">
 
         <img src="${kua.foto}" alt="${kua.nama}" loading="lazy" decoding="async">
 

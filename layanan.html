@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Layanan KUA - SAPA Kabupaten Pandeglang</title>
+
+    <link rel="icon" href="assets/logo.png" type="image/png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<!-- ==========================
+NAVBAR
+=========================== -->
+
+<nav class="navbar">
+    <a href="index.html" class="navbar-brand">
+        <img src="assets/logo.png" alt="Logo Kemenag" class="navbar-logo" decoding="async">
+        <span class="navbar-brand-text">
+            SAPA
+            <small>Sentra Pelayanan Keagamaan</small>
+        </span>
+    </a>
+    <div class="navbar-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="login.html" class="nav-link">Login</a>
+        <a href="chat.html" class="nav-link nav-link-ai">🤖 AI Assistant KUA</a>
+    </div>
+</nav>
+
+    <!-- ==========================
+         KONTEN
+    =========================== -->
+
+    <main class="container">
+
+        <a href="index.html" class="back-link-page">← Kembali ke Beranda</a>
+
+        <div id="kuaInfo" class="kua-detail-card">
+            <p class="loading-text">Memuat data KUA...</p>
+        </div>
+
+        <h2 class="layanan-title">Layanan yang Tersedia</h2>
+
+        <div id="layananGrid" class="layanan-grid">
+            <p class="loading-text">Memuat layanan...</p>
+        </div>
+
+    </main>
+
+<!-- ==========================
+     FOOTER
+=========================== -->
+
+<footer class="site-footer">
+
+    <div class="footer-bottom">
+        <p>&copy; 2026 SAPA — Kementerian Agama Kabupaten Pandeglang</p>
+    </div>
+
+</footer>
+
+    <!-- ==========================
+         JAVASCRIPT
+    =========================== -->
+
+    <script>
+
+        const SUPABASE_URL = "https://bwmnuzgxnhlhpawrzwmp.supabase.co";
+        const SUPABASE_KEY = "sb_publishable_92nPJq33RxieAG6T-mj99A_vPUik0D4";
+        const TABLE_NAME = "Data_KUA";
+
+        const params = new URLSearchParams(window.location.search);
+        const kuaId = params.get("id");
+
+        if (!kuaId){
+
+            document.getElementById("kuaInfo").innerHTML =
+                "<p class='no-result'>KUA tidak ditemukan.</p>";
+
+        } else {
+
+            fetch(`${SUPABASE_URL}/rest/v1/${TABLE_NAME}?id=eq.${kuaId}&select=*`, {
+                headers: {
+                    apikey: SUPABASE_KEY,
+                    Authorization: `Bearer ${SUPABASE_KEY}`
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+
+                if (!data || data.length === 0){
+                    document.getElementById("kuaInfo").innerHTML =
+                        "<p class='no-result'>KUA tidak ditemukan.</p>";
+                    return;
+                }
+
+                const kua = data[0];
+
+                document.title = `${kua.nama} - SAPA Kabupaten Pandeglang`;
+
+                document.getElementById("kuaInfo").innerHTML = `
+
+                    <img src="${kua.foto}" alt="${kua.nama}" class="kua-detail-photo">
+
+                    <div class="kua-detail-body">
+
+                        <span class="status ${kua.status === "AKTIF" ? "aktif" : "nonaktif"}">
+                            ${kua.status}
+                        </span>
+
+                        <h1>${kua.nama}</h1>
+
+                        <p><strong>${kua.kepala}</strong></p>
+
+                        <p>📍 ${kua.alamat}</p>
+
+                        <p>☎ ${kua.telepon}</p>
+
+                        <p>✉ ${kua.email}</p>
+
+                        <a href="${kua.maps}" target="_blank" class="kua-detail-maps">📍 Buka di Google Maps</a>
+
+                    </div>
+
+                `;
+
+                renderLayanan(kua.nama);
+
+            })
+            .catch(error => {
+
+                console.error(error);
+
+                document.getElementById("kuaInfo").innerHTML =
+                    "<p class='no-result'>Data gagal dimuat.</p>";
+
+            });
+
+        }
+
+        function renderLayanan(namaKua){
+
+            const layanan = [
+                {
+                    warna: "teal",
+                    judul: "Pusat Pengaduan",
+                    isi: `Saluran pengaduan masyarakat terhadap pelayanan ${namaKua}.`
+                },
+                {
+                    warna: "purple",
+                    judul: "Inovasi Layanan Publik",
+                    isi: `Berisi layanan publik yang ada di ${namaKua} seperti SIMKAH, dll.`
+                },
+                {
+                    warna: "indigo",
+                    judul: "Media Sosial",
+                    isi: `Beberapa platform media sosial yang dimiliki ${namaKua}.`
+                },
+                {
+                    warna: "green",
+                    judul: "Dokumentasi Digital KUA",
+                    isi: `Berisi data-data digital yang ada di dalam ${namaKua}.`
+                },
+                {
+                    warna: "orange",
+                    judul: "Moderasi Beragama",
+                    isi: `Gerakan moderasi lintas agama di wilayah kerja ${namaKua}.`
+                },
+                {
+                    warna: "green2",
+                    judul: "Antrean",
+                    isi: `Booking layanan offline untuk memilih tanggal dan jam layanan ${namaKua}.`
+                },
+                {
+                    warna: "blue-gray",
+                    judul: "Pelayanan KUA",
+                    isi: `Pelayanan yang ada di ${namaKua}:`,
+                    daftar: [
+                        "Pendaftaran/Pelaporan Kehendak Nikah/Rujuk",
+                        "Bimbingan Perkawinan",
+                        "Pengukuran Arah Kiblat",
+                        "Penerbitan Akte Ikrar Wakaf",
+                        "Konsultasi Hukum Islam",
+                        "Konsultasi Keluarga"
+                    ]
+                },
+                {
+                    warna: "blue",
+                    judul: "DATAKU (Data Keagamaan Terpadu)",
+                    isi: `Data-data yang dimiliki ${namaKua}:`,
+                    daftar: [
+                        "Rumah Ibadah",
+                        "Lembaga Pendidikan",
+                        "Data Penduduk Berdasarkan Agama",
+                        "Penyuluh Agama",
+                        "Aset Umat",
+                        "Ormas Keagamaan",
+                        "Lembaga Bimbingan Rohani",
+                        "Tokoh Agama"
+                    ]
+                }
+            ];
+
+            let html = "";
+
+            layanan.forEach(item => {
+
+                html += `
+
+                <div class="layanan-tile layanan-${item.warna}">
+                    <h3>${item.judul}</h3>
+                    <p>${item.isi}</p>
+                    ${item.daftar ? "<ul>" + item.daftar.map(d => `<li>${d}</li>`).join("") + "</ul>" : ""}
+                </div>
+
+                `;
+
+            });
+
+            document.getElementById("layananGrid").innerHTML = html;
+
+        }
+
+    </script>
+
+</body>
+
+</html>

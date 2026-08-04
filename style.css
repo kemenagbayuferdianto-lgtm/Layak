@@ -709,6 +709,228 @@ color:#8b949e;
 
 
 /* ==========================
+HALAMAN LAYANAN KUA
+========================== */
+
+.back-link-page{
+
+display:inline-block;
+
+margin-bottom:20px;
+
+font-size:14px;
+
+color:#2ecc8f;
+
+font-weight:600;
+
+text-decoration:none;
+
+}
+
+.back-link-page:hover{
+
+text-decoration:underline;
+
+}
+
+.kua-detail-card{
+
+background:#2d333b;
+
+border:1px solid rgba(255,255,255,.10);
+
+border-radius:18px;
+
+overflow:hidden;
+
+box-shadow:0 6px 14px rgba(0,0,0,.3);
+
+margin-bottom:40px;
+
+display:flex;
+
+flex-wrap:wrap;
+
+}
+
+.kua-detail-photo{
+
+width:320px;
+
+max-width:100%;
+
+height:260px;
+
+object-fit:cover;
+
+flex-shrink:0;
+
+}
+
+.kua-detail-body{
+
+padding:24px;
+
+flex:1;
+
+min-width:260px;
+
+}
+
+.kua-detail-body h1{
+
+font-size:26px;
+
+color:#2ecc8f;
+
+margin:10px 0 12px;
+
+}
+
+.kua-detail-body p{
+
+font-size:15px;
+
+line-height:1.7;
+
+color:#8b949e;
+
+margin-bottom:6px;
+
+}
+
+.kua-detail-maps{
+
+display:inline-block;
+
+margin-top:14px;
+
+padding:10px 18px;
+
+background:#0B6E4F;
+
+color:#fff;
+
+text-decoration:none;
+
+border-radius:8px;
+
+font-size:14px;
+
+font-weight:600;
+
+}
+
+.layanan-title{
+
+font-size:22px;
+
+color:#cdd9e5;
+
+margin-bottom:20px;
+
+}
+
+.layanan-grid{
+
+display:grid;
+
+grid-template-columns:repeat(3,1fr);
+
+gap:20px;
+
+margin-bottom:20px;
+
+}
+
+.layanan-tile{
+
+border-radius:14px;
+
+padding:26px 24px;
+
+color:#fff;
+
+min-height:140px;
+
+}
+
+.layanan-tile h3{
+
+font-size:19px;
+
+margin-bottom:10px;
+
+}
+
+.layanan-tile p{
+
+font-size:14px;
+
+line-height:1.6;
+
+opacity:.92;
+
+}
+
+.layanan-tile ul{
+
+margin-top:10px;
+
+padding-left:18px;
+
+}
+
+.layanan-tile li{
+
+font-size:13px;
+
+line-height:1.8;
+
+opacity:.92;
+
+}
+
+.layanan-teal{ background:#0d9488; }
+.layanan-purple{ background:#9333ea; }
+.layanan-indigo{ background:#4f46e5; }
+.layanan-green{ background:#22a55e; }
+.layanan-orange{ background:#f97316; }
+.layanan-green2{ background:#16a34a; }
+.layanan-blue-gray{ background:#475569; }
+.layanan-blue{ background:#2563eb; }
+
+@media(max-width:800px){
+
+.layanan-grid{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+}
+
+@media(max-width:500px){
+
+.layanan-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.kua-detail-photo{
+
+width:100%;
+
+height:200px;
+
+}
+
+}
+
+
+/* ==========================
 TABLET
 ========================== */
 
