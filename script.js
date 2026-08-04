@@ -1,11 +1,26 @@
-const API_URL = "https://script.google.com/macros/s/AKfycbyiWpRPO7c0vqWlJvjOjtMH8RGkAIav9y3wC-_F1zDscQSnHWBt5uaSbZqhNYmDEMdr/exec";
+const SUPABASE_URL = "https://bwmnuzgxnhlhpawrzwmp.supabase.co";
+const SUPABASE_KEY = "sb_publishable_92nPJq33RxieAG6T-mj99A_vPUik0D4";
+const TABLE_NAME = "Data_KUA";
 
 let semuaData = [];
 
 // ==========================
+// PENGATURAN PAGINASI
+// ==========================
+const ITEMS_PER_PAGE = 6;
+let currentData = [];
+let currentPage = 1;
+
+
+// ==========================
 // AMBIL DATA
 // ==========================
-fetch(API_URL)
+fetch(`${SUPABASE_URL}/rest/v1/${TABLE_NAME}?select=*`, {
+    headers: {
+      apikey: SUPABASE_KEY,
+      Authorization: `Bearer ${SUPABASE_KEY}`
+    }
+  })
   .then(response => response.json())
   .then(data => {
 
@@ -24,57 +39,134 @@ fetch(API_URL)
 
 
 // ==========================
-// TAMPILKAN CARD
+// TAMPILKAN CARD (mulai dari halaman 1)
 // ==========================
 
 function tampilkanData(data){
 
+  currentData = data;
+  currentPage = 1;
+  renderHalaman();
+
+}
+
+
+// ==========================
+// RENDER KARTU UNTUK HALAMAN AKTIF
+// ==========================
+
+function renderHalaman(){
+
+  const start = (currentPage - 1) * ITEMS_PER_PAGE;
+  const end = start + ITEMS_PER_PAGE;
+  const dataHalaman = currentData.slice(start, end);
+
   let html = "";
 
-  data.forEach(kua => {
+  if (dataHalaman.length === 0){
 
-    html += `
+    html = "<p class='no-result'>Tidak ada KUA yang ditemukan.</p>";
 
-    <div class="card"
-         onclick="bukaWebsite('${kua.link}')">
+  } else {
 
-      <img src="${kua.foto}" alt="${kua.nama}">
+    dataHalaman.forEach(kua => {
 
-      <div class="card-body">
+      html += `
 
-        <span class="status ${kua.status === "AKTIF" ? "aktif" : "nonaktif"}">
-          ${kua.status}
-        </span>
+      <div class="card"
+           onclick="bukaWebsite('${kua.link}')">
 
-        <h2>${kua.nama}</h2>
+        <img src="${kua.foto}" alt="${kua.nama}" loading="lazy" decoding="async">
 
-        <p><strong>${kua.kepala}</strong></p>
+        <div class="card-body">
 
-        <p>📍 ${kua.alamat}</p>
+          <span class="status ${kua.status === "AKTIF" ? "aktif" : "nonaktif"}">
+            ${kua.status}
+          </span>
 
-        <p>☎ ${kua.telepon}</p>
+          <h2>${kua.nama}</h2>
 
-        <p>✉ ${kua.email}</p>
+          <p><strong>${kua.kepala}</strong></p>
 
-        <a href="${kua.maps}"
-           target="_blank"
-           class="maps-icon"
-           title="Buka di Maps"
-           onclick="event.stopPropagation();">
-           📍
-        </a>
+          <p>📍 ${kua.alamat}</p>
 
-        <span class="card-arrow">→</span>
+          <p>☎ ${kua.telepon}</p>
+
+          <p>✉ ${kua.email}</p>
+
+          <a href="${kua.maps}"
+             target="_blank"
+             class="maps-icon"
+             title="Buka di Maps"
+             onclick="event.stopPropagation();">
+             📍
+          </a>
+
+          <span class="card-arrow">→</span>
+
+        </div>
 
       </div>
 
-    </div>
+      `;
 
-    `;
+    });
 
-  });
+  }
 
   document.getElementById("cards").innerHTML = html;
+
+  renderPaginasi();
+
+}
+
+
+// ==========================
+// RENDER TOMBOL PAGINASI
+// ==========================
+
+function renderPaginasi(){
+
+  const pagination = document.getElementById("pagination");
+
+  if (!pagination) return;
+
+  const totalPages = Math.ceil(currentData.length / ITEMS_PER_PAGE);
+
+  if (totalPages <= 1){
+
+    pagination.innerHTML = "";
+    return;
+
+  }
+
+  let html = "";
+
+  html += `<button class="page-btn" onclick="gantiHalaman(${currentPage - 1})" ${currentPage === 1 ? "disabled" : ""}>← Sebelumnya</button>`;
+
+  html += `<span class="page-info">Halaman ${currentPage} dari ${totalPages}</span>`;
+
+  html += `<button class="page-btn" onclick="gantiHalaman(${currentPage + 1})" ${currentPage === totalPages ? "disabled" : ""}>Selanjutnya →</button>`;
+
+  pagination.innerHTML = html;
+
+}
+
+
+// ==========================
+// PINDAH HALAMAN
+// ==========================
+
+function gantiHalaman(halamanBaru){
+
+  const totalPages = Math.ceil(currentData.length / ITEMS_PER_PAGE);
+
+  if (halamanBaru < 1 || halamanBaru > totalPages) return;
+
+  currentPage = halamanBaru;
+  renderHalaman();
+
+  document.getElementById("cards").scrollIntoView({ behavior: "smooth", block: "start" });
 
 }
 
