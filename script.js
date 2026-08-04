@@ -56,25 +56,15 @@ function tampilkanData(data){
 
         <p>✉ ${kua.email}</p>
 
-        <div class="button-group">
+        <a href="${kua.maps}"
+           target="_blank"
+           class="maps-icon"
+           title="Buka di Maps"
+           onclick="event.stopPropagation();">
+           📍
+        </a>
 
-          <a
-            href="${kua.maps}"
-            target="_blank"
-            class="btn maps"
-            onclick="event.stopPropagation();">
-            Maps
-          </a>
-
-          <a
-            href="${kua.link}"
-            target="_blank"
-            class="btn web"
-            onclick="event.stopPropagation();">
-            Website
-          </a>
-
-        </div>
+        <span class="card-arrow">→</span>
 
       </div>
 
@@ -85,25 +75,6 @@ function tampilkanData(data){
   });
 
   document.getElementById("cards").innerHTML = html;
-
-}
-
-
-// ==========================
-// CARD KLIK
-// ==========================
-
-function bukaWebsite(link){
-
-  if(link && link.trim() !== ""){
-
-    window.open(link,"_blank");
-
-  }else{
-
-    alert("Website KUA belum tersedia.");
-
-  }
 
 }
 

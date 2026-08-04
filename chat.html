@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Assistant KUA - SAPA</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .chat-box {
+            max-width: 700px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        .quick-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        .quick-buttons button {
+            flex: 1;
+            min-width: 140px;
+            padding: 10px;
+            border: 1px solid #0B6E4F;
+            background: #fff;
+            color: #0B6E4F;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .quick-buttons button:hover {
+            background: #0B6E4F;
+            color: #fff;
+        }
+        #chat-messages {
+            min-height: 200px;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            margin: 15px 0;
+        }
+        .msg-user, .msg-assistant {
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin: 6px 0;
+            max-width: 80%;
+        }
+        .msg-user {
+            background: #DCF8C6;
+            margin-left: auto;
+            text-align: right;
+        }
+        .msg-assistant {
+            background: #f1f1f1;
+        }
+        .chat-input-row {
+            display: flex;
+            gap: 8px;
+        }
+        .chat-input-row input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+        .chat-input-row button {
+            padding: 10px 20px;
+            background: #0B6E4F;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        #fileContent {
+            white-space: pre-wrap;
+            background: #fafafa;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-top: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div style="text-align:center; margin-bottom:25px;">
+        <h1 style="color:#0B6E4F;">AI Assistant KUA</h1>
+        <p style="color:#666;">Asisten Digital Pelayanan KUA</p>
+        <a href="index.html">&larr; Kembali ke Pencarian KUA</a>
+    </div>
+
+    <section class="chat-box">
+
+        <p>Assalamu'alaikum. Saya bisa membantu:</p>
+
+        <div class="quick-buttons">
+            <button onclick="quickAsk('Apa saja syarat pendaftaran nikah?')">Syarat Nikah</button>
+            <button onclick="quickAsk('Berapa biaya nikah di KUA?')">Biaya Nikah</button>
+            <button onclick="quickAsk('Bagaimana melihat jadwal penghulu?')">Jadwal Penghulu</button>
+            <button onclick="quickAsk('Bagaimana legalisasi buku nikah?')">Legalisasi</button>
+        </div>
+
+        <div id="chat-messages"></div>
+
+        <div class="chat-input-row">
+            <input type="text" id="userInput" placeholder="Tulis pertanyaan...">
+            <button onclick="sendMessage()">Kirim</button>
+        </div>
+
+        <div style="margin-top:20px;">
+            <label>Upload File (PDF/Word/Excel/CSV/TXT):</label><br>
+            <input type="file" id="fileUpload" accept=".pdf,.docx,.xlsx,.csv,.txt">
+            <div id="fileContent"></div>
+        </div>
+
+        <button onclick="clearChat()" style="margin-top:15px; background:#c0392b; color:#fff; border:none; padding:8px 16px; border-radius:8px; cursor:pointer;">Hapus Percakapan</button>
+
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth.js/1.6.0/mammoth.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+    <script>
+        const GEMINI_API_KEY = "AQ.Ab8RN6J0WoIrXykqY877WUPRDb_krE4OWLAxeyJAeLgFOOr5Lw";
+        const MODEL = "gemini-3.1-flash-lite";
+
+        let messages = [];
+
+        async function sendMessage() {
+            const input = document.getElementById("userInput");
+            const prompt = input.value.trim();
+            if (!prompt) return;
+
+            input.value = "";
+            addMessage("user", prompt);
+
+            const jawaban = await callGemini(prompt);
+            addMessage("assistant", jawaban);
+        }
+
+        function quickAsk(pertanyaan) {
+            messages = [];
+            document.getElementById("chat-messages").innerHTML = "";
+            addMessage("user", pertanyaan);
+            callGemini(pertanyaan).then(function(jawaban) {
+                addMessage("assistant", jawaban);
+            });
+        }
+
+        function addMessage(role, content) {
+            messages.push({ role: role, content: content });
+            const box = document.getElementById("chat-messages");
+            const div = document.createElement("div");
+            div.className = role === "user" ? "msg-user" : "msg-assistant";
+            div.textContent = content;
+            box.appendChild(div);
+            box.scrollTop = box.scrollHeight;
+        }
+
+        async function callGemini(prompt) {
+            const systemPrompt = "Kamu adalah AI Assistant resmi KUA Kecamatan Cadasari, Kabupaten Pandeglang.\n\n" +
+                "Tugasmu adalah membantu masyarakat mengenai:\n" +
+                "- Persyaratan nikah\n" +
+                "- Biaya nikah\n" +
+                "- Jadwal penghulu\n" +
+                "- Wakaf\n" +
+                "- Rujuk\n" +
+                "- Legalisasi buku nikah\n" +
+                "- Konsultasi keluarga\n" +
+                "- Layanan KUA lainnya\n\n" +
+                "Pedoman menjawab:\n" +
+                "- Gunakan bahasa Indonesia yang sopan, ramah, dan profesional.\n" +
+                "- Berikan jawaban yang jelas dan mudah dipahami.\n" +
+                "- Jangan mengarang informasi.\n" +
+                "- Jika informasi belum pasti, sarankan pengguna menghubungi petugas KUA Kecamatan Cadasari.\n\n" +
+                "Pertanyaan pengguna:\n" + prompt;
+
+            try {
+                const response = await fetch(
+                    "https://generativelanguage.googleapis.com/v1beta/models/" + MODEL + ":generateContent?key=" + GEMINI_API_KEY,
+                    {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            contents: [{ parts: [{ text: systemPrompt }] }]
+                        })
+                    }
+                );
+                const data = await response.json();
+                return data.candidates[0].content.parts[0].text;
+            } catch (err) {
+                console.error(err);
+                return "Maaf, terjadi kesalahan saat menghubungi AI Assistant. Silakan coba lagi.";
+            }
+        }
+
+        function clearChat() {
+            messages = [];
+            document.getElementById("chat-messages").innerHTML = "";
+        }
+
+        document.getElementById("fileUpload").addEventListener("change", async function (e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const fileType = file.name.split(".").pop().toLowerCase();
+            const contentDiv = document.getElementById("fileContent");
+            contentDiv.textContent = "Membaca file...";
+
+            let isiFile = "";
+
+            try {
+                if (fileType === "pdf") {
+                    const arrayBuffer = await file.arrayBuffer();
+                    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+                    for (let i = 1; i <= pdf.numPages; i++) {
+                        const page = await pdf.getPage(i);
+                        const textContent = await page.getTextContent();
+                        isiFile += textContent.items.map(function(item) { return item.str; }).join(" ") + "\n";
+                    }
+                } else if (fileType === "docx") {
+                    const arrayBuffer = await file.arrayBuffer();
+                    const result = await mammoth.extractRawText({ arrayBuffer: arrayBuffer });
+                    isiFile = result.value;
+                } else if (fileType === "xlsx") {
+                    const arrayBuffer = await file.arrayBuffer();
+                    const workbook = XLSX.read(arrayBuffer, { type: "array" });
+                    const sheet = workbook.Sheets[workbook.SheetNames[0]];
+                    isiFile = XLSX.utils.sheet_to_csv(sheet);
+                } else if (fileType === "csv") {
+                    isiFile = await file.text();
+                } else if (fileType === "txt") {
+                    isiFile = await file.text();
+                }
+
+                contentDiv.textContent = isiFile || "(File kosong)";
+            } catch (err) {
+                console.error(err);
+                contentDiv.textContent = "Gagal membaca file: " + err.message;
+            }
+        });
+    </script>
+
+</body>
+</html>

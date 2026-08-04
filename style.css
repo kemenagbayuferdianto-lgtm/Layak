@@ -26,9 +26,51 @@ SEARCH
 
 display:flex;
 
-justify-content:center;
+flex-direction:column;
+
+align-items:center;
 
 margin-bottom:30px;
+
+}
+
+.search-label{
+
+font-size:14px;
+
+color:#0B6E4F;
+
+font-weight:bold;
+
+margin-bottom:10px;
+
+}
+
+.search-input-wrapper{
+
+position:relative;
+
+width:100%;
+
+max-width:520px;
+
+}
+
+.search-icon{
+
+position:absolute;
+
+left:20px;
+
+top:50%;
+
+transform:translateY(-50%);
+
+font-size:20px;
+
+color:#0b7d4a;
+
+pointer-events:none;
 
 }
 
@@ -36,9 +78,7 @@ margin-bottom:30px;
 
 width:100%;
 
-max-width:520px;
-
-padding:14px 22px;
+padding:14px 22px 14px 52px;
 
 font-size:16px;
 
@@ -49,6 +89,26 @@ border:2px solid #0b7d4a;
 outline:none;
 
 box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+transition: box-shadow 0.2s ease, border-color 0.2s ease;
+
+animation: search-pulse 1.2s ease-out 2;
+
+}
+
+.search-box input:focus{
+
+border-color:#0B6E4F;
+
+box-shadow:0 0 0 4px rgba(11, 110, 79, 0.15), 0 5px 15px rgba(0,0,0,.08);
+
+}
+
+@keyframes search-pulse{
+
+0%{ box-shadow:0 0 0 0 rgba(11, 125, 74, 0.35), 0 5px 15px rgba(0,0,0,.08); }
+
+100%{ box-shadow:0 0 0 12px rgba(11, 125, 74, 0), 0 5px 15px rgba(0,0,0,.08); }
 
 }
 
@@ -105,6 +165,49 @@ color:inherit;
 
 display:block;
 
+}
+
+.card {
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+.maps-icon {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: #fff;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  font-size: 16px;
+}
+
+.card-arrow {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  font-size: 20px;
+  color: #0B6E4F;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.card:hover .card-arrow {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .card:hover{
@@ -257,10 +360,116 @@ grid-template-columns:1fr;
 
 }
 
-.search-box input{
+.search-input-wrapper{
 
 max-width:100%;
 
 }
 
+}
+.site-header {
+    text-align: center;
+    padding: 30px 20px 10px;
+}
+
+.site-header h1 {
+    font-size: 42px;
+    color: #0B6E4F;
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+}
+
+.site-header p {
+    font-size: 15px;
+    color: #666;
+    font-weight: 500;
+}
+.site-footer {
+    background: #0B6E4F;
+    color: #fff;
+    margin-top: 40px;
+    padding: 0 20px;
+}
+
+.footer-content {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: space-between;
+    padding-bottom: 30px;
+}
+
+.footer-brand h3 {
+    font-size: 24px;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+.footer-brand p {
+    font-size: 13px;
+    color: #cfe8de;
+    line-height: 1.5;
+}
+
+.footer-info p {
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: #e6f4ee;
+}
+
+.footer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.footer-links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    opacity: 0.9;
+    transition: opacity 0.2s ease;
+}
+
+.footer-links a:hover {
+    opacity: 1;
+    text-decoration: underline;
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.15);
+    text-align: center;
+    padding: 15px 0;
+    font-size: 13px;
+    color: #cfe8de;
+}
+
+.ai-button-wrapper {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.ai-button {
+    display: inline-block;
+    padding: 12px 24px;
+    background: #0B6E4F;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(11, 110, 79, 0.3);
+    transition: all 0.2s ease;
+}
+
+.ai-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(11, 110, 79, 0.4);
+}
+
+.ai-button:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 6px rgba(11, 110, 79, 0.3);
 }
