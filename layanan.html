@@ -138,7 +138,7 @@ NAVBAR
 
                 `;
 
-                renderLayanan(kua.nama);
+                renderLayanan(kua);
 
             })
             .catch(error => {
@@ -152,23 +152,22 @@ NAVBAR
 
         }
 
-        function renderLayanan(namaKua){
+        function renderLayanan(kua){
+
+            const namaKua = kua.nama;
 
             const layanan = [
                 {
                     warna: "teal",
                     judul: "Pusat Pengaduan",
-                    isi: `Saluran pengaduan masyarakat terhadap pelayanan ${namaKua}.`
+                    isi: `Saluran pengaduan masyarakat terhadap pelayanan ${namaKua}.`,
+                    link: `pengaduan.html?id=${kua.id}`
                 },
                 {
                     warna: "purple",
                     judul: "Inovasi Layanan Publik",
-                    isi: `Berisi layanan publik yang ada di ${namaKua} seperti SIMKAH, dll.`
-                },
-                {
-                    warna: "indigo",
-                    judul: "Media Sosial",
-                    isi: `Beberapa platform media sosial yang dimiliki ${namaKua}.`
+                    isi: `Berisi layanan publik yang ada di ${namaKua} seperti SIMKAH, dll.`,
+                    link: "https://simkah.kemenag.go.id"
                 },
                 {
                     warna: "green",
@@ -217,17 +216,54 @@ NAVBAR
 
             let html = "";
 
-            layanan.forEach(item => {
+            // Kotak Media Sosial dibangun terpisah (isinya beda tiap KUA:
+            // Instagram, Facebook, atau kosong kalau belum diisi)
+            let medsosLinks = "";
+
+            if (kua.instagram){
+                medsosLinks += `<a href="${kua.instagram}" target="_blank">📷 Instagram</a>`;
+            }
+
+            if (kua.facebook){
+                medsosLinks += `<a href="${kua.facebook}" target="_blank">📘 Facebook</a>`;
+            }
+
+            if (!medsosLinks){
+                medsosLinks = "<p>Belum ada media sosial terdaftar.</p>";
+            }
+
+            const medsosHtml = `
+
+            <div class="layanan-tile layanan-indigo">
+                <h3>Media Sosial</h3>
+                <p>Beberapa platform media sosial yang dimiliki ${namaKua}.</p>
+                <div class="medsos-links">${medsosLinks}</div>
+            </div>
+
+            `;
+
+            // Kotak lain dibangun lewat perulangan, dan kotak Media Sosial
+            // disisipkan tepat setelah "Inovasi Layanan Publik" (posisi ke-3)
+            layanan.forEach((item, index) => {
+
+                const isLink = Boolean(item.link);
+                const isExternal = isLink && item.link.startsWith("http");
 
                 html += `
 
-                <div class="layanan-tile layanan-${item.warna}">
+                <a href="${item.link || '#'}"
+                   ${isExternal ? 'target="_blank"' : (isLink ? '' : 'onclick="return false;"')}
+                   class="layanan-tile layanan-${item.warna} ${isLink ? '' : 'layanan-tile-static'}">
                     <h3>${item.judul}</h3>
                     <p>${item.isi}</p>
                     ${item.daftar ? "<ul>" + item.daftar.map(d => `<li>${d}</li>`).join("") + "</ul>" : ""}
-                </div>
+                </a>
 
                 `;
+
+                if (item.judul === "Inovasi Layanan Publik"){
+                    html += medsosHtml;
+                }
 
             });
 

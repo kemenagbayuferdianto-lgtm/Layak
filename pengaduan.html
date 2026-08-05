@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Pusat Pengaduan - SAPA Kabupaten Pandeglang</title>
+
+    <link rel="icon" href="assets/logo.png" type="image/png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<!-- ==========================
+NAVBAR
+=========================== -->
+
+<nav class="navbar">
+    <a href="index.html" class="navbar-brand">
+        <img src="assets/logo.png" alt="Logo Kemenag" class="navbar-logo" decoding="async">
+        <span class="navbar-brand-text">
+            SAPA
+            <small>Sentra Pelayanan Keagamaan</small>
+        </span>
+    </a>
+    <div class="navbar-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="login.html" class="nav-link">Login</a>
+        <a href="chat.html" class="nav-link nav-link-ai">🤖 AI Assistant KUA</a>
+    </div>
+</nav>
+
+    <!-- ==========================
+         FORM PENGADUAN
+    =========================== -->
+
+    <main class="login-main">
+
+        <div class="login-card">
+
+            <div class="login-card-header">
+                <h2>Pusat Pengaduan</h2>
+                <p id="pengaduanSubjudul">Memuat data KUA...</p>
+            </div>
+
+            <form class="login-form" id="formPengaduan">
+
+                <div class="form-group">
+                    <label for="namaPelapor">Nama Anda</label>
+                    <input type="text" id="namaPelapor" placeholder="Masukkan nama lengkap" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="kontak">Kontak (No. HP / Email) — Opsional</label>
+                    <input type="text" id="kontak" placeholder="Untuk dihubungi balik jika perlu">
+                </div>
+
+                <div class="form-group">
+                    <label for="isiPengaduan">Isi Pengaduan</label>
+                    <textarea id="isiPengaduan" placeholder="Tulis pengaduan Anda di sini..." required></textarea>
+                </div>
+
+                <button type="submit" class="login-btn">Kirim Pengaduan</button>
+
+                <div id="formMessage"></div>
+
+            </form>
+
+            <a href="index.html" id="backLink" class="back-link">← Kembali ke Beranda</a>
+
+        </div>
+
+    </main>
+
+<!-- ==========================
+     FOOTER
+=========================== -->
+
+<footer class="site-footer">
+
+    <div class="footer-bottom">
+        <p>&copy; 2026 SAPA — Kementerian Agama Kabupaten Pandeglang</p>
+    </div>
+
+</footer>
+
+    <!-- ==========================
+         JAVASCRIPT
+    =========================== -->
+
+    <script>
+
+        const SUPABASE_URL = "https://bwmnuzgxnhlhpawrzwmp.supabase.co";
+        const SUPABASE_KEY = "sb_publishable_92nPJq33RxieAG6T-mj99A_vPUik0D4";
+        const TABLE_KUA = "Data_KUA";
+        const TABLE_PENGADUAN = "Pengaduan";
+
+        const params = new URLSearchParams(window.location.search);
+        const kuaId = params.get("id");
+
+        let namaKuaTujuan = "";
+
+        // ==========================
+        // AMBIL NAMA KUA (untuk ditampilkan di subjudul)
+        // ==========================
+
+        if (kuaId){
+
+            fetch(`${SUPABASE_URL}/rest/v1/${TABLE_KUA}?id=eq.${kuaId}&select=nama`, {
+                headers: {
+                    apikey: SUPABASE_KEY,
+                    Authorization: `Bearer ${SUPABASE_KEY}`
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+
+                if (data && data.length > 0){
+                    namaKuaTujuan = data[0].nama;
+                    document.getElementById("pengaduanSubjudul").textContent =
+                        `Pengaduan untuk: ${namaKuaTujuan}`;
+                    document.getElementById("backLink").href = `layanan.html?id=${kuaId}`;
+                    document.getElementById("backLink").textContent = `← Kembali ke ${namaKuaTujuan}`;
+                } else {
+                    document.getElementById("pengaduanSubjudul").textContent =
+                        "KUA tidak ditemukan.";
+                }
+
+            })
+            .catch(() => {
+                document.getElementById("pengaduanSubjudul").textContent =
+                    "Gagal memuat data KUA.";
+            });
+
+        } else {
+
+            document.getElementById("pengaduanSubjudul").textContent =
+                "Pengaduan umum (tidak ditujukan ke KUA tertentu).";
+
+        }
+
+        // ==========================
+        // KIRIM PENGADUAN
+        // ==========================
+
+        document.getElementById("formPengaduan").addEventListener("submit", function(e){
+
+            e.preventDefault();
+
+            const namaPelapor = document.getElementById("namaPelapor").value.trim();
+            const kontak = document.getElementById("kontak").value.trim();
+            const isiPengaduan = document.getElementById("isiPengaduan").value.trim();
+            const messageBox = document.getElementById("formMessage");
+            const submitBtn = e.target.querySelector("button[type='submit']");
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Mengirim...";
+
+            fetch(`${SUPABASE_URL}/rest/v1/${TABLE_PENGADUAN}`, {
+                method: "POST",
+                headers: {
+                    apikey: SUPABASE_KEY,
+                    Authorization: `Bearer ${SUPABASE_KEY}`,
+                    "Content-Type": "application/json",
+                    Prefer: "return=minimal"
+                },
+                body: JSON.stringify({
+                    kua_id: kuaId ? Number(kuaId) : null,
+                    nama_pelapor: namaPelapor,
+                    kontak: kontak,
+                    isi_pengaduan: isiPengaduan
+                })
+            })
+            .then(response => {
+
+                submitBtn.disabled = false;
+                submitBtn.textContent = "Kirim Pengaduan";
+
+                if (response.ok){
+                    messageBox.innerHTML = `<p class="form-message sukses">✓ Pengaduan berhasil dikirim. Terima kasih.</p>`;
+                    document.getElementById("formPengaduan").reset();
+                } else {
+                    messageBox.innerHTML = `<p class="form-message gagal">Gagal mengirim pengaduan. Silakan coba lagi.</p>`;
+                }
+
+            })
+            .catch(error => {
+
+                console.error(error);
+
+                submitBtn.disabled = false;
+                submitBtn.textContent = "Kirim Pengaduan";
+
+                messageBox.innerHTML = `<p class="form-message gagal">Terjadi kesalahan jaringan. Silakan coba lagi.</p>`;
+
+            });
+
+        });
+
+    </script>
+
+</body>
+
+</html>
