@@ -1,0 +1,239 @@
+/* ==========================================================
+   RESPONSIVE.CSS — SAPA Kabupaten Pandeglang
+
+   File ini HANYA mengatur tampilan di layar kecil (HP & tablet).
+   style.css tidak diubah sama sekali.
+
+   PENTING: panggil file ini SESUDAH style.css di setiap halaman:
+   <link rel="stylesheet" href="style.css">
+   <link rel="stylesheet" href="responsive.css">
+   ========================================================== */
+
+
+/* ==========================================================
+   1. UKURAN KARTU SERAGAM (berlaku di semua ukuran layar)
+   Tanpa ini, tinggi kartu ikut panjang alamat tiap KUA,
+   sehingga kartu jadi tidak rata satu sama lain.
+   ========================================================== */
+
+.card{
+  display:flex;
+  flex-direction:column;
+  height:430px;
+}
+
+.card img{
+  height:190px;
+  flex-shrink:0;
+}
+
+.card-body{
+  flex:1;
+  overflow:hidden;
+}
+
+/* Teks yang kepanjangan dipotong rapi dengan "...",
+   bukan bikin kartu melar */
+.card-body h2,
+.card-body p{
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+
+/* ==========================================================
+   2. TABLET  (lebar 900px ke bawah)
+   ========================================================== */
+
+@media (max-width:900px){
+
+  /* --- Navbar: brand di atas, menu turun ke bawahnya --- */
+  .navbar{
+    flex-wrap:wrap;
+    gap:14px;
+    padding:16px 18px;
+  }
+
+  .navbar-links{
+    width:100%;
+    justify-content:flex-start;
+    flex-wrap:wrap;
+    gap:16px;
+  }
+
+  /* --- Halaman detail KUA: foto melebar penuh --- */
+  .kua-detail-photo{
+    width:100%;
+    height:240px;
+  }
+
+}
+
+
+/* ==========================================================
+   3. HP  (lebar 600px ke bawah)
+   ========================================================== */
+
+@media (max-width:600px){
+
+  body{
+    padding:0 8px 20px;
+  }
+
+  /* --- Navbar --- */
+  .navbar{
+    margin:0 -8px 16px;
+    padding:14px 16px;
+  }
+
+  .navbar-logo{
+    width:44px;
+    height:44px;
+  }
+
+  .navbar-brand-text{
+    font-size:22px;
+  }
+
+  .navbar-brand-text small{
+    font-size:12px;
+  }
+
+  .navbar-links{
+    justify-content:space-between;
+    gap:10px;
+  }
+
+  .nav-link{
+    font-size:13px;
+    padding:4px 2px;
+  }
+
+  .nav-link-ai{
+    font-size:12px;
+    padding:6px 12px !important;
+  }
+
+  /* --- Search --- */
+  .search-box input{
+    font-size:15px;
+    padding:12px 18px 12px 46px;
+  }
+
+  .search-icon{
+    left:16px;
+    font-size:18px;
+  }
+
+  /* --- Kartu --- */
+  .card{
+    height:auto;          /* di HP 1 kolom, tinggi boleh menyesuaikan isi */
+    min-height:380px;
+  }
+
+  .card img{
+    height:180px;
+  }
+
+  .card-body h2{
+    font-size:18px;
+  }
+
+  .card-body p{
+    font-size:14px;
+  }
+
+  /* --- Halaman detail KUA --- */
+  .kua-detail-photo{
+    height:200px;
+  }
+
+  .kua-detail-body{
+    padding:20px;
+  }
+
+  .kua-detail-body h1{
+    font-size:22px;
+  }
+
+  .layanan-title{
+    font-size:19px;
+  }
+
+  .layanan-tile{
+    padding:22px 20px;
+    min-height:auto;
+  }
+
+  /* --- Footer --- */
+  .footer-bottom{
+    font-size:12px;
+    padding:14px 10px;
+    line-height:1.6;
+  }
+
+}
+
+
+/* ==========================================================
+   4. PAGINASI DI HP  (lebar 520px ke bawah)
+   Tombol ditumpuk vertikal supaya tidak pernah kepotong,
+   berapa pun panjang teksnya.
+   ========================================================== */
+
+@media (max-width:520px){
+
+  .pagination{
+    flex-direction:column;
+    gap:10px;
+    margin:28px 0 10px;
+    padding:0 4px;
+  }
+
+  .page-info{
+    order:-1;              /* "Halaman 1 dari 6" naik ke atas */
+    font-size:13px;
+  }
+
+  .page-btn{
+    width:100%;
+    padding:11px 16px;
+    font-size:14px;
+  }
+
+}
+
+
+/* ==========================================================
+   5. HP KECIL  (lebar 380px ke bawah)
+   ========================================================== */
+
+@media (max-width:380px){
+
+  .navbar-brand-text{
+    font-size:19px;
+  }
+
+  .navbar-brand-text small{
+    font-size:11px;
+  }
+
+  .navbar-logo{
+    width:38px;
+    height:38px;
+  }
+
+  .nav-link{
+    font-size:12px;
+  }
+
+  .card-body h2{
+    font-size:17px;
+  }
+
+  .card-body p{
+    font-size:13px;
+  }
+
+}
