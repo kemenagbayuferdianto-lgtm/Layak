@@ -1,5 +1,9 @@
 <svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
 
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Rakkas&amp;family=El+Messiri:wght@500;600&amp;display=swap');
+  </style>
+
   <!-- Background gradient -->
   <defs>
     <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -9,37 +13,31 @@
   </defs>
   <rect width="1200" height="630" fill="url(#bgGradient)"/>
 
-  <!-- Elemen dekoratif: lingkaran transparan -->
+  <!-- Elemen dekoratif -->
   <circle cx="1050" cy="80" r="180" fill="#ffffff" opacity="0.06"/>
   <circle cx="100" cy="560" r="140" fill="#ffffff" opacity="0.06"/>
   <circle cx="1100" cy="550" r="90" fill="#ffffff" opacity="0.08"/>
 
-  <!-- Ikon masjid sederhana (kubah + menara) -->
-  <g transform="translate(560, 130)" opacity="0.9">
-    <rect x="-70" y="60" width="140" height="70" fill="#ffffff" opacity="0.15"/>
-    <circle cx="0" cy="30" r="45" fill="#ffffff" opacity="0.15"/>
-    <rect x="-6" y="-15" width="12" height="30" fill="#ffffff" opacity="0.15"/>
-    <circle cx="0" cy="-20" r="7" fill="#ffffff" opacity="0.15"/>
-    <rect x="-95" y="90" width="16" height="40" fill="#ffffff" opacity="0.15"/>
-    <rect x="79" y="90" width="16" height="40" fill="#ffffff" opacity="0.15"/>
-  </g>
-
-  <!-- Judul utama -->
-  <text x="600" y="380" font-family="Arial, Helvetica, sans-serif" font-size="110" font-weight="bold" fill="#ffffff" text-anchor="middle" letter-spacing="6">
+  <!-- Judul utama: SAPA (font kaligrafi) -->
+  <text x="600" y="330" font-family="'Rakkas', serif" font-size="140" fill="#ffffff" text-anchor="middle">
     SAPA
   </text>
 
   <!-- Subjudul -->
-  <text x="600" y="430" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="600" fill="#ffffff" text-anchor="middle" opacity="0.95">
+  <text x="600" y="385" font-family="'El Messiri', sans-serif" font-weight="600" font-size="30" fill="#ffffff" text-anchor="middle" opacity="0.95">
     Sentra Pelayanan Agama
   </text>
 
-  <!-- Garis pemisah -->
-  <rect x="530" y="500" width="140" height="3" fill="#ffffff" opacity="0.5"/>
+  <!-- Ornamen pemisah bergaya geometris Islami -->
+  <g transform="translate(600, 455)">
+    <line x1="-90" y1="0" x2="-20" y2="0" stroke="#ffffff" stroke-width="2" opacity="0.6"/>
+    <rect x="-7" y="-7" width="14" height="14" fill="#ffffff" opacity="0.6" transform="rotate(45 0 0)"/>
+    <line x1="20" y1="0" x2="90" y2="0" stroke="#ffffff" stroke-width="2" opacity="0.6"/>
+  </g>
 
   <!-- Tagline -->
-  <text x="600" y="540" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#e6f4ee" text-anchor="middle">
-    Informasi &amp; Layanan KUA Kabupaten Pandeglang
+  <text x="600" y="500" font-family="'El Messiri', sans-serif" font-size="18" fill="#e6f4ee" text-anchor="middle">
+    Informasi &amp; Layanan KUA se-Kabupaten Pandeglang
   </text>
 
 </svg>
