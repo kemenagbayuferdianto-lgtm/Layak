@@ -166,7 +166,7 @@ function gantiHalaman(halamanBaru){
   currentPage = halamanBaru;
   renderHalaman();
 
-  document.getElementById("cards").scrollIntoView({ behavior: "smooth", block: "start" });
+  window.scrollTo({ top: 0, behavior: "smooth" });
 
 }
 
