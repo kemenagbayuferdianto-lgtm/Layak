@@ -43,29 +43,22 @@
 
 
 /* ==========================================================
-   2. TABLET  (lebar 900px ke bawah)
+   4. PAGINASI DI HP
    ========================================================== */
 
-@media (max-width:900px){
+@media (max-width:520px){
 
-  /* --- Navbar: brand di atas, menu turun ke bawahnya --- */
-  .navbar{
-    flex-wrap:wrap;
-    gap:14px;
-    padding:16px 18px;
+  .pagination{
+    gap:6px;
+    margin:28px 0 10px;
+    padding:0 4px;
   }
 
-  .navbar-links{
-    width:100%;
-    justify-content:flex-start;
-    flex-wrap:wrap;
-    gap:16px;
-  }
-
-  /* --- Halaman detail KUA: foto melebar penuh --- */
-  .kua-detail-photo{
-    width:100%;
-    height:240px;
+  .page-num,
+  .page-nav{
+    min-width:38px;
+    padding:8px 10px;
+    font-size:13px;
   }
 
 }
@@ -279,6 +272,34 @@
     white-space:nowrap;
     font-size:12px;
     padding:6px 12px !important;
+  }
+
+}
+/* ==========================================================
+   7. PERBAIKAN PAGINASI ANGKA — menimpa aturan lama di atas
+   ========================================================== */
+
+@media (max-width:520px){
+
+  .pagination{
+    flex-direction:row !important;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:6px;
+    margin:28px 0 10px;
+    padding:0 4px;
+  }
+
+  .page-btn{
+    width:auto !important;
+    min-width:38px;
+    padding:8px 10px;
+    font-size:13px;
+  }
+
+  .page-nav{
+    font-size:17px;
+    line-height:1;
   }
 
 }

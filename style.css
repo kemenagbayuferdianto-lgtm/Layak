@@ -1075,6 +1075,32 @@ max-width:100%;
     font-size: 13px;
     color: #cfe8de;
 }
+/* ==========================
+PAGINASI ANGKA
+========================== */
+
+.pagination{
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+.page-num,
+.page-nav{
+  min-width:42px;
+  padding:9px 12px;
+  font-size:14px;
+}
+
+.page-num.active{
+  background:#17a874;
+  color:#fff;
+  border-color:#17a874;
+}
+
+.page-nav{
+  font-size:18px;
+  line-height:1;
+}
 
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="responsive.css">

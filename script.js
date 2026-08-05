@@ -134,19 +134,22 @@ function renderPaginasi(){
   const totalPages = Math.ceil(currentData.length / ITEMS_PER_PAGE);
 
   if (totalPages <= 1){
-
     pagination.innerHTML = "";
     return;
-
   }
 
   let html = "";
 
-  html += `<button class="page-btn" onclick="gantiHalaman(${currentPage - 1})" ${currentPage === 1 ? "disabled" : ""}>← Sebelumnya</button>`;
+  // Tombol panah kiri
+  html += `<button class="page-btn page-nav" onclick="gantiHalaman(${currentPage - 1})" ${currentPage === 1 ? "disabled" : ""} aria-label="Halaman sebelumnya">‹</button>`;
 
-  html += `<span class="page-info">Halaman ${currentPage} dari ${totalPages}</span>`;
+  // Tombol angka
+  for (let i = 1; i <= totalPages; i++){
+    html += `<button class="page-btn page-num ${i === currentPage ? "active" : ""}" onclick="gantiHalaman(${i})">${i}</button>`;
+  }
 
-  html += `<button class="page-btn" onclick="gantiHalaman(${currentPage + 1})" ${currentPage === totalPages ? "disabled" : ""}>Selanjutnya →</button>`;
+  // Tombol panah kanan
+  html += `<button class="page-btn page-nav" onclick="gantiHalaman(${currentPage + 1})" ${currentPage === totalPages ? "disabled" : ""} aria-label="Halaman selanjutnya">›</button>`;
 
   pagination.innerHTML = html;
 
