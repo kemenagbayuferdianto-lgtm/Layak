@@ -1,0 +1,56 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- Latar hijau tua, sudut membulat -->
+  <rect width="512" height="512" rx="104" fill="#0a5c40"/>
+
+  <!-- Perisai segi lima: isi hijau, tepi emas tebal -->
+  <polygon points="256,83 432,211 365,418 147,418 80,211"
+           fill="#1a7a3c"
+           stroke="#F2C230"
+           stroke-width="26"
+           stroke-linejoin="round"/>
+
+  <!-- Busur kapas (kiri) -->
+  <path d="M 168 212 Q 104 292 178 378"
+        fill="none"
+        stroke="#A8C98A"
+        stroke-width="18"
+        stroke-linecap="round"/>
+
+  <!-- Busur padi (kanan) -->
+  <path d="M 344 212 Q 408 292 334 378"
+        fill="none"
+        stroke="#E8A430"
+        stroke-width="18"
+        stroke-linecap="round"/>
+
+  <!-- Bintang -->
+  <path d="M256,126 L265.6,153.8 L295,154.4 L271.6,172.2 L280.1,200.4 L256,183.6 L231.9,200.4 L240.4,172.2 L217,154.4 L246.4,153.8 Z"
+        fill="#F2C230"/>
+
+  <!-- Kitab terbuka: halaman kiri -->
+  <path d="M 250 268 L 190 282 L 190 348 L 250 336 Z"
+        fill="#F2C230"
+        stroke="#C9941A"
+        stroke-width="8"
+        stroke-linejoin="round"/>
+
+  <!-- Kitab terbuka: halaman kanan -->
+  <path d="M 262 268 L 322 282 L 322 348 L 262 336 Z"
+        fill="#F2C230"
+        stroke="#C9941A"
+        stroke-width="8"
+        stroke-linejoin="round"/>
+
+  <!-- Punggung kitab -->
+  <rect x="248" y="266" width="16" height="74" rx="4" fill="#C9941A"/>
+
+  <!-- Alas kitab -->
+  <path d="M 186 352 L 256 340 L 326 352"
+        fill="none"
+        stroke="#ffffff"
+        stroke-width="12"
+        stroke-linecap="round"
+        stroke-linejoin="round"/>
+
+</svg>
