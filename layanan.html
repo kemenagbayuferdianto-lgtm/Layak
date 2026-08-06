@@ -17,7 +17,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="responsive.css">
 
 </head>
@@ -51,7 +50,7 @@ NAVBAR
 
         <a href="index.html" class="back-link-page">← Kembali ke Beranda</a>
 
-        <div id="kuaInfo" class="kua-detail-card">
+        <div id="kuaInfo" class="kua-header">
             <p class="loading-text">Memuat data KUA...</p>
         </div>
 
@@ -116,27 +115,11 @@ NAVBAR
 
                 document.getElementById("kuaInfo").innerHTML = `
 
-                    <img src="${kua.foto}" alt="${kua.nama}" class="kua-detail-photo">
+                    <h1>Selamat Datang di ${kua.nama}</h1>
 
-                    <div class="kua-detail-body">
-
-                        <span class="status ${kua.status === "AKTIF" ? "aktif" : "nonaktif"}">
-                            ${kua.status}
-                        </span>
-
-                        <h1>${kua.nama}</h1>
-
-                        <p><strong>${kua.kepala}</strong></p>
-
-                        <p>📍 ${kua.alamat}</p>
-
-                        <p>☎ ${kua.telepon}</p>
-
-                        <p>✉ ${kua.email}</p>
-
-                        <a href="${kua.maps}" target="_blank" class="kua-detail-maps">📍 Buka di Google Maps</a>
-
-                    </div>
+                    <span class="status ${kua.status === "AKTIF" ? "aktif" : "nonaktif"}">
+                        ${kua.status}
+                    </span>
 
                 `;
 
@@ -166,25 +149,9 @@ NAVBAR
                     link: `pengaduan.html?id=${kua.id}`
                 },
                 {
-                    warna: "purple",
-                    judul: "Inovasi Layanan Publik",
-                    isi: `Berisi layanan publik yang ada di ${namaKua} seperti SIMKAH, dll.`,
-                    link: "https://simkah.kemenag.go.id"
-                },
-                {
                     warna: "green",
                     judul: "Dokumentasi Digital KUA",
                     isi: `Berisi data-data digital yang ada di dalam ${namaKua}.`
-                },
-                {
-                    warna: "orange",
-                    judul: "Moderasi Beragama",
-                    isi: `Gerakan moderasi lintas agama di wilayah kerja ${namaKua}.`
-                },
-                {
-                    warna: "green2",
-                    judul: "Antrean",
-                    isi: `Booking layanan offline untuk memilih tanggal dan jam layanan ${namaKua}.`
                 },
                 {
                     warna: "blue-gray",
@@ -199,6 +166,21 @@ NAVBAR
                         "Konsultasi Keluarga"
                     ]
                 },
+              
+                {
+                    warna: "purple",
+                    judul: "Inovasi Layanan Publik",
+                    isi: `Berisi layanan publik yang ada di ${namaKua} seperti SIMKAH, dll.`,
+                    link: "https://simkah.kemenag.go.id"
+                },
+              
+                {
+                    warna: "orange",
+                    judul: "Moderasi Beragama",
+                    isi: `Gerakan moderasi lintas agama di wilayah kerja ${namaKua}.`
+                },
+                
+                
                 {
                     warna: "blue",
                     judul: "DATAKU (Data Keagamaan Terpadu)",

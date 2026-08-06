@@ -1101,6 +1101,28 @@ PAGINASI ANGKA
   font-size:18px;
   line-height:1;
 }
+/* ==========================
+JUDUL HALAMAN LAYANAN
+========================== */
+
+.kua-header{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:14px;
+  margin-bottom:28px;
+}
+
+.kua-header h1{
+  font-size:25px;
+  color:#2ecc8f;
+  margin:0;
+  line-height:1.3;
+}
+
+.kua-header .status{
+  margin:0;
+}
 
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="responsive.css">
