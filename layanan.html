@@ -37,6 +37,7 @@ NAVBAR
     </a>
     <div class="navbar-links">
         <a href="index.html" class="nav-link">Home</a>
+        <a href="nikah.html" class="nav-link">Persiapan Nikah</a>
         <a href="login.html" class="nav-link">Login</a>
         <a href="chat.html" class="nav-link nav-link-ai">🤖 AI Assistant KUA</a>
     </div>
@@ -141,7 +142,16 @@ NAVBAR
 
             const namaKua = kua.nama;
 
+            // Nama KUA tanpa awalan "KUA " — dipakai sebagai parameter di nikah.html
+            const namaSingkat = String(namaKua).replace(/^KUA\s+/i, "");
+
             const layanan = [
+                {
+                    warna: "green",
+                    judul: "Persiapan Nikah",
+                    isi: `Cek berkas, biaya resmi, dan tenggat pendaftaran nikah di ${namaKua} sesuai kondisimu.`,
+                    link: `nikah.html?kua=${encodeURIComponent(namaSingkat)}`
+                },
                 {
                     warna: "teal",
                     judul: "Pusat Pengaduan",
@@ -229,7 +239,7 @@ NAVBAR
             `;
 
             // Kotak lain dibangun lewat perulangan, dan kotak Media Sosial
-            // disisipkan tepat setelah "Inovasi Layanan Publik" (posisi ke-3)
+            // disisipkan tepat setelah "Layanan Digital Resmi"
             layanan.forEach((item, index) => {
 
                 const isLink = Boolean(item.link);
@@ -247,7 +257,7 @@ NAVBAR
 
                 `;
 
-                if (item.judul === "Inovasi Layanan Publik"){
+                if (item.judul === "Layanan Digital Resmi"){
                     html += medsosHtml;
                 }
 

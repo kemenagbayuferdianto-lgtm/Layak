@@ -4,15 +4,9 @@
 <head>
 
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>SAPA Kabupaten Pandeglang</title>
-
-    <!-- ==========================
-         OPEN GRAPH (Preview saat link dishare)
-    =========================== -->
 
     <meta property="og:title" content="SAPA - Sentra Pelayanan Agama Kabupaten Pandeglang">
     <meta property="og:description" content="Cari informasi KUA, Kepala KUA, dan layanan pernikahan di seluruh Kabupaten Pandeglang.">
@@ -25,23 +19,151 @@
     <meta name="twitter:description" content="Cari informasi KUA, Kepala KUA, dan layanan pernikahan di seluruh Kabupaten Pandeglang.">
     <meta name="twitter:image" content="https://kemenagbayuferdianto-lgtm.github.io/Sapa/assets/banner.jpg">
 
-    <!-- ==========================
-         PWA
-    =========================== -->
-
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0B6E4F">
-
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://script.google.com">
+    <link rel="preconnect" href="https://bwmnuzgxnhlhpawrzwmp.supabase.co">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="responsive.css">
+
+    <style>
+        /* ---------- pita sambutan + pencarian ---------- */
+        .pita{
+            margin:0 -16px 18px;
+            padding:26px 20px 24px;
+            background:linear-gradient(180deg,#20443a 0%,#22272e 100%);
+        }
+        .pita-isi{max-width:760px;margin:0 auto}
+        .pita .daerah{
+            font-size:12.5px;
+            letter-spacing:.6px;
+            color:#2ecc8f;
+            font-weight:600;
+            margin-bottom:6px;
+        }
+        .pita h1{
+            font-size:23px;
+            line-height:1.35;
+            color:#cdd9e5;
+            font-weight:700;
+            margin-bottom:18px;
+        }
+
+        /* ---------- ajakan utama ---------- */
+        .aksi-cepat{
+            max-width:760px;
+            margin:0 auto 20px;
+        }
+        .aksi-cepat a{
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            gap:9px;
+            width:100%;
+            min-height:50px;
+            padding:12px 18px;
+            border-radius:12px;
+            border:2px solid #0B6E4F;
+            background:#0B6E4F;
+            color:#fff;
+            font-size:15px;
+            font-weight:600;
+            text-decoration:none;
+            text-align:center;
+            line-height:1.35;
+            transition:background .2s ease,border-color .2s ease;
+        }
+        .aksi-cepat a:hover{
+            background:#17a874;
+            border-color:#17a874;
+        }
+        .aksi-cepat svg{flex:none;width:19px;height:19px}
+
+        .jumlah-hasil{
+            font-size:13.5px;
+            color:#8b949e;
+            margin-bottom:12px;
+        }
+        .jumlah-hasil b{color:#cdd9e5;font-weight:600}
+
+        /* ---------- daftar KUA ---------- */
+        .cards-container{
+            display:grid;
+            grid-template-columns:1fr;
+            gap:10px;
+        }
+
+        .kua-item{
+            display:flex;
+            align-items:center;
+            gap:13px;
+            padding:12px 14px;
+            background:#2d333b;
+            border:1px solid rgba(255,255,255,.10);
+            border-radius:14px;
+            cursor:pointer;
+            text-decoration:none;
+            color:inherit;
+            transition:border-color .2s ease,background .2s ease;
+        }
+        .kua-item:hover{border-color:rgba(46,204,143,.5);background:#333a43}
+        .kua-item:hover .kua-panah{transform:translateX(3px)}
+
+        .kua-foto{
+            width:60px;
+            height:60px;
+            flex:none;
+            border-radius:11px;
+            object-fit:cover;
+            background:#22272e;
+        }
+
+        .kua-teks{flex:1;min-width:0}
+        .kua-nama{
+            display:block;
+            font-size:15.5px;
+            font-weight:600;
+            color:#cdd9e5;
+            line-height:1.3;
+            margin-bottom:2px;
+        }
+        .kua-alamat{
+            display:block;
+            font-size:12.5px;
+            color:#8b949e;
+            line-height:1.45;
+            overflow:hidden;
+            text-overflow:ellipsis;
+            white-space:nowrap;
+        }
+        .kua-kepala{
+            display:flex;
+            align-items:center;
+            gap:5px;
+            font-size:12px;
+            color:#2ecc8f;
+            margin-top:4px;
+        }
+        .kua-kepala.tutup{color:#8b949e}
+        .kua-kepala svg{flex:none;width:13px;height:13px}
+
+        .kua-panah{
+            flex:none;
+            color:#2ecc8f;
+            transition:transform .2s ease;
+        }
+        .kua-panah svg{width:20px;height:20px;display:block}
+
+        @media(min-width:820px){
+            .pita h1{font-size:29px}
+            .cards-container{grid-template-columns:1fr 1fr}
+        }
+    </style>
 
 </head>
 
@@ -61,68 +183,76 @@ NAVBAR
     </a>
     <div class="navbar-links">
         <a href="index.html" class="nav-link active">Home</a>
+        <a href="nikah.html" class="nav-link">Persiapan Nikah</a>
         <a href="login.html" class="nav-link">Login</a>
         <a href="chat.html" class="nav-link nav-link-ai">🤖 AI KUA</a>
     </div>
 </nav>
 
 <!-- ==========================
-     SEARCH
+     PITA SAMBUTAN + PENCARIAN
 =========================== -->
 
-    <section class="search-box">
+<section class="pita">
+    <div class="pita-isi">
 
-        <div class="search-input-wrapper">
-            <span class="search-icon">🔍</span>
-            <input
-                type="text"
-                id="search"
-                placeholder="Cari Kecamatan, Kepala KUA, atau Nama KUA..."
-                autofocus>
+        <p class="daerah">Kabupaten Pandeglang</p>
+        <h1>Cari KUA dan layanannya tanpa harus datang dulu</h1>
+
+        <div class="search-box">
+            <div class="search-input-wrapper">
+                <span class="search-icon">🔍</span>
+                <input
+                    type="text"
+                    id="search"
+                    placeholder="Ketik nama kecamatan..."
+                    autocomplete="off">
+            </div>
         </div>
 
-    </section>
+    </div>
+</section>
 
+<main class="container">
 
     <!-- ==========================
-         CARD
+         AJAKAN UTAMA
     =========================== -->
 
-    <main class="container">
+    <div class="aksi-cepat">
+        <a href="nikah.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 6.6a5 5 0 0 0-7.1 0L12 8.3l-1.7-1.7a5 5 0 1 0-7.1 7.1L12 22l8.8-8.3a5 5 0 0 0 0-7.1z"/></svg>
+            Mau menikah? Cek berkasnya
+        </a>
+    </div>
 
-        <div id="cards" class="cards-container">
+    <p class="jumlah-hasil" id="jumlahHasil"><b>-</b> KUA ditemukan</p>
 
-            <p class="loading-text">Memuat data KUA...</p>
+    <!-- ==========================
+         DAFTAR KUA
+    =========================== -->
 
-        </div>
+    <div id="cards" class="cards-container">
+        <p class="loading-text">Memuat data KUA...</p>
+    </div>
 
-        <div id="pagination" class="pagination">
+    <div id="pagination" class="pagination">
+        <!-- Tombol paginasi dibuat otomatis oleh script.js -->
+    </div>
 
-            <!-- Tombol paginasi dibuat otomatis oleh script.js -->
+</main>
 
-        </div>
-
-    </main>
-    
 <!-- ==========================
      FOOTER
 =========================== -->
 
 <footer class="site-footer">
-
     <div class="footer-bottom">
         <p>&copy; 2026 SAPA — Kementerian Agama Kabupaten Pandeglang</p>
     </div>
-
 </footer>
 
-    <!-- ==========================
-         JAVASCRIPT
-    =========================== -->
-
-    <script src="script.js" defer></script>
-
- 
+<script src="script.js" defer></script>
 
 </body>
 

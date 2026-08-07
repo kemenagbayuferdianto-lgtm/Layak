@@ -4,16 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Assistant KUA - SAPA</title>
-    <link rel="stylesheet" href="style.css">
+
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0B6E4F">
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="responsive.css">
+
     <style>
         .chat-box {
             max-width: 700px;
             margin: 20px auto;
             padding: 20px;
         }
+        .chat-judul {
+            text-align: center;
+            margin: 25px 0;
+        }
+        .chat-judul h1 { color: #0B6E4F; margin-bottom: 4px; }
+        .chat-judul p { color: #666; margin: 0; }
         .quick-buttons {
             display: flex;
             flex-wrap: wrap;
@@ -48,15 +58,25 @@
             border-radius: 8px;
             margin: 6px 0;
             max-width: 80%;
+            line-height: 1.6;
+            word-wrap: break-word;
         }
         .msg-user {
             background: #DCF8C6;
             margin-left: auto;
-            text-align: right;
         }
         .msg-assistant {
             background: #f1f1f1;
         }
+        .msg-assistant ul { margin: 6px 0; padding-left: 20px; }
+        .mengetik {
+            display: none;
+            font-size: 13px;
+            color: #777;
+            font-style: italic;
+            margin: 6px 0;
+        }
+        .mengetik.tampil { display: block; }
         .chat-input-row {
             display: flex;
             gap: 8px;
@@ -75,23 +95,64 @@
             border-radius: 8px;
             cursor: pointer;
         }
+        .chat-input-row button:disabled {
+            background: #9BB8AC;
+            cursor: default;
+        }
+        .berkas-lampiran {
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 14px;
+        }
+        .berkas-lampiran label { font-weight: 600; }
         #fileContent {
             white-space: pre-wrap;
             background: #fafafa;
             border: 1px solid #ddd;
+            border-radius: 6px;
             padding: 10px;
             margin-top: 10px;
             max-height: 200px;
             overflow-y: auto;
+            font-size: 13px;
+        }
+        .tombol-hapus {
+            margin-top: 15px;
+            background: #c0392b;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
 
-    <div style="text-align:center; margin-bottom:25px;">
-        <h1 style="color:#0B6E4F;">AI Assistant KUA</h1>
-        <p style="color:#666;">Asisten Digital Pelayanan KUA</p>
-        <a href="index.html">&larr; Kembali ke Pencarian KUA</a>
+<!-- ==========================
+NAVBAR
+=========================== -->
+
+<nav class="navbar">
+    <a href="index.html" class="navbar-brand">
+        <img src="assets/logo.png" alt="Logo Kemenag" class="navbar-logo" decoding="async">
+        <span class="navbar-brand-text">
+            SAPA
+            <small>Sentra Pelayanan Keagamaan</small>
+        </span>
+    </a>
+    <div class="navbar-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="nikah.html" class="nav-link">Persiapan Nikah</a>
+        <a href="login.html" class="nav-link">Login</a>
+        <a href="chat.html" class="nav-link nav-link-ai active">🤖 AI KUA</a>
+    </div>
+</nav>
+
+    <div class="chat-judul">
+        <h1>AI Assistant KUA</h1>
+        <p>Asisten Digital Pelayanan KUA</p>
     </div>
 
     <section class="chat-box">
@@ -107,18 +168,20 @@
 
         <div id="chat-messages"></div>
 
+        <div id="mengetik" class="mengetik">AI Assistant sedang mengetik...</div>
+
         <div class="chat-input-row">
-            <input type="text" id="userInput" placeholder="Tulis pertanyaan...">
-            <button onclick="sendMessage()">Kirim</button>
+            <input type="text" id="userInput" placeholder="Tulis pertanyaan..." autocomplete="off">
+            <button id="tombolKirim" onclick="sendMessage()">Kirim</button>
         </div>
 
-        <div style="margin-top:20px;">
-            <label>Upload File (PDF/Word/Excel/CSV/TXT):</label><br>
+        <div class="berkas-lampiran">
+            <label for="fileUpload">Lampirkan file (PDF/Word/Excel/CSV/TXT)</label><br>
             <input type="file" id="fileUpload" accept=".pdf,.docx,.xlsx,.csv,.txt">
             <div id="fileContent"></div>
         </div>
 
-        <button onclick="clearChat()" style="margin-top:15px; background:#c0392b; color:#fff; border:none; padding:8px 16px; border-radius:8px; cursor:pointer;">Hapus Percakapan</button>
+        <button class="tombol-hapus" onclick="clearChat()">Hapus Percakapan</button>
 
     </section>
 
@@ -130,12 +193,35 @@
         const GEMINI_API_KEY = "";
         const MODEL = "gemini-3.1-flash-lite";
 
-        let messages = [];
+        const SYSTEM_PROMPT =
+            "Kamu adalah AI Assistant resmi KUA di lingkungan Kementerian Agama Kabupaten Pandeglang.\n\n" +
+            "Tugasmu adalah membantu masyarakat mengenai:\n" +
+            "- Persyaratan nikah\n" +
+            "- Biaya nikah\n" +
+            "- Jadwal penghulu\n" +
+            "- Wakaf\n" +
+            "- Rujuk\n" +
+            "- Legalisasi buku nikah\n" +
+            "- Konsultasi keluarga\n" +
+            "- Layanan KUA lainnya\n\n" +
+            "Pedoman menjawab:\n" +
+            "- Gunakan bahasa Indonesia yang sopan, ramah, dan profesional.\n" +
+            "- Berikan jawaban yang jelas, ringkas, dan mudah dipahami.\n" +
+            "- Jangan mengarang informasi.\n" +
+            "- Nikah di kantor KUA pada hari dan jam kerja tidak dipungut biaya. Akad di luar KUA atau di luar jam kerja dikenai Rp 600.000 sebagai PNBP yang disetor ke kas negara lewat bank, bukan tunai kepada petugas.\n" +
+            "- Jika pengguna menyebutkan kondisi tertentu (beda kecamatan, pernah bercerai, anggota TNI/Polri, waktu mepet), sesuaikan jawaban dengan kondisi itu.\n" +
+            "- Jika informasi belum pasti, sarankan pengguna menghubungi petugas KUA kecamatan yang bersangkutan.";
+
+        let riwayat = [];
+        let isiFileTerakhir = "";
+        let sedangProses = false;
+
+        /* ---------- kirim pesan ---------- */
 
         async function sendMessage() {
             const input = document.getElementById("userInput");
             const prompt = input.value.trim();
-            if (!prompt) return;
+            if (!prompt || sedangProses) return;
 
             input.value = "";
             addMessage("user", prompt);
@@ -145,41 +231,86 @@
         }
 
         function quickAsk(pertanyaan) {
-            messages = [];
-            document.getElementById("chat-messages").innerHTML = "";
+            if (sedangProses) return;
             addMessage("user", pertanyaan);
-            callGemini(pertanyaan).then(function(jawaban) {
+            callGemini(pertanyaan).then(function (jawaban) {
                 addMessage("assistant", jawaban);
             });
         }
 
         function addMessage(role, content) {
-            messages.push({ role: role, content: content });
+            riwayat.push({ role: role, content: content });
+
             const box = document.getElementById("chat-messages");
             const div = document.createElement("div");
             div.className = role === "user" ? "msg-user" : "msg-assistant";
-            div.textContent = content;
+            div.innerHTML = rapikan(content);
             box.appendChild(div);
             box.scrollTop = box.scrollHeight;
         }
 
+        /* Ubah penulisan khas AI (**tebal**, daftar berbintang, baris baru)
+           jadi HTML sederhana. Teks di-escape dulu supaya aman. */
+        function rapikan(teks) {
+            let aman = String(teks)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;");
+
+            aman = aman.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+
+            const baris = aman.split("\n");
+            let hasil = "";
+            let dalamDaftar = false;
+
+            baris.forEach(function (b) {
+                const bersih = b.trim();
+                if (/^[-*]\s+/.test(bersih)) {
+                    if (!dalamDaftar) { hasil += "<ul>"; dalamDaftar = true; }
+                    hasil += "<li>" + bersih.replace(/^[-*]\s+/, "") + "</li>";
+                } else {
+                    if (dalamDaftar) { hasil += "</ul>"; dalamDaftar = false; }
+                    hasil += bersih ? bersih + "<br>" : "";
+                }
+            });
+
+            if (dalamDaftar) hasil += "</ul>";
+            return hasil;
+        }
+
+        function setProses(aktif) {
+            sedangProses = aktif;
+            document.getElementById("mengetik").className = aktif ? "mengetik tampil" : "mengetik";
+            document.getElementById("tombolKirim").disabled = aktif;
+        }
+
+        /* ---------- panggil Gemini ---------- */
+
         async function callGemini(prompt) {
-            const systemPrompt = "Kamu adalah AI Assistant resmi KUA Kecamatan Cadasari, Kabupaten Pandeglang.\n\n" +
-                "Tugasmu adalah membantu masyarakat mengenai:\n" +
-                "- Persyaratan nikah\n" +
-                "- Biaya nikah\n" +
-                "- Jadwal penghulu\n" +
-                "- Wakaf\n" +
-                "- Rujuk\n" +
-                "- Legalisasi buku nikah\n" +
-                "- Konsultasi keluarga\n" +
-                "- Layanan KUA lainnya\n\n" +
-                "Pedoman menjawab:\n" +
-                "- Gunakan bahasa Indonesia yang sopan, ramah, dan profesional.\n" +
-                "- Berikan jawaban yang jelas dan mudah dipahami.\n" +
-                "- Jangan mengarang informasi.\n" +
-                "- Jika informasi belum pasti, sarankan pengguna menghubungi petugas KUA Kecamatan Cadasari.\n\n" +
-                "Pertanyaan pengguna:\n" + prompt;
+            if (!GEMINI_API_KEY) {
+                return "AI Assistant belum aktif. Kunci API Gemini belum diisi pada halaman ini.";
+            }
+
+            setProses(true);
+
+            // Riwayat percakapan ikut dikirim supaya AI ingat pertanyaan sebelumnya.
+            const contents = riwayat
+                .filter(function (m) { return m.content; })
+                .map(function (m) {
+                    return {
+                        role: m.role === "user" ? "user" : "model",
+                        parts: [{ text: m.content }]
+                    };
+                });
+
+            // Isi file yang dilampirkan ditempelkan ke pertanyaan terakhir.
+            if (isiFileTerakhir && contents.length) {
+                const akhir = contents[contents.length - 1];
+                akhir.parts[0].text =
+                    "Isi dokumen yang dilampirkan pengguna:\n\n" +
+                    isiFileTerakhir.slice(0, 12000) +
+                    "\n\nPertanyaan pengguna:\n" + prompt;
+            }
 
             try {
                 const response = await fetch(
@@ -188,22 +319,56 @@
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({
-                            contents: [{ parts: [{ text: systemPrompt }] }]
+                            systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
+                            contents: contents
                         })
                     }
                 );
+
                 const data = await response.json();
-                return data.candidates[0].content.parts[0].text;
+
+                if (!response.ok) {
+                    console.error(data);
+                    return "Maaf, layanan AI sedang tidak dapat diakses. Silakan coba beberapa saat lagi.";
+                }
+
+                const teks =
+                    data &&
+                    data.candidates &&
+                    data.candidates[0] &&
+                    data.candidates[0].content &&
+                    data.candidates[0].content.parts &&
+                    data.candidates[0].content.parts[0] &&
+                    data.candidates[0].content.parts[0].text;
+
+                return teks || "Maaf, saya belum bisa menjawab pertanyaan itu. Silakan hubungi petugas KUA setempat.";
+
             } catch (err) {
                 console.error(err);
-                return "Maaf, terjadi kesalahan saat menghubungi AI Assistant. Silakan coba lagi.";
+                return "Maaf, terjadi kesalahan saat menghubungi AI Assistant. Periksa koneksi internet lalu coba lagi.";
+            } finally {
+                setProses(false);
             }
         }
 
         function clearChat() {
-            messages = [];
+            riwayat = [];
+            isiFileTerakhir = "";
             document.getElementById("chat-messages").innerHTML = "";
+            document.getElementById("fileContent").textContent = "";
+            document.getElementById("fileUpload").value = "";
         }
+
+        /* ---------- tekan Enter untuk mengirim ---------- */
+
+        document.getElementById("userInput").addEventListener("keydown", function (e) {
+            if (e.key === "Enter") {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        /* ---------- baca file lampiran ---------- */
 
         document.getElementById("fileUpload").addEventListener("change", async function (e) {
             const file = e.target.files[0];
@@ -222,7 +387,7 @@
                     for (let i = 1; i <= pdf.numPages; i++) {
                         const page = await pdf.getPage(i);
                         const textContent = await page.getTextContent();
-                        isiFile += textContent.items.map(function(item) { return item.str; }).join(" ") + "\n";
+                        isiFile += textContent.items.map(function (item) { return item.str; }).join(" ") + "\n";
                     }
                 } else if (fileType === "docx") {
                     const arrayBuffer = await file.arrayBuffer();
@@ -233,18 +398,30 @@
                     const workbook = XLSX.read(arrayBuffer, { type: "array" });
                     const sheet = workbook.Sheets[workbook.SheetNames[0]];
                     isiFile = XLSX.utils.sheet_to_csv(sheet);
-                } else if (fileType === "csv") {
-                    isiFile = await file.text();
-                } else if (fileType === "txt") {
+                } else if (fileType === "csv" || fileType === "txt") {
                     isiFile = await file.text();
                 }
 
-                contentDiv.textContent = isiFile || "(File kosong)";
+                isiFileTerakhir = isiFile;
+                contentDiv.textContent = isiFile
+                    ? isiFile.slice(0, 3000) + (isiFile.length > 3000 ? "\n\n(dipotong, isi lengkap tetap dikirim ke AI)" : "")
+                    : "(File kosong)";
+
             } catch (err) {
                 console.error(err);
+                isiFileTerakhir = "";
                 contentDiv.textContent = "Gagal membaca file: " + err.message;
             }
         });
+
+        /* ---------- terima pertanyaan dari halaman Persiapan Nikah ---------- */
+
+        (function () {
+            const q = new URLSearchParams(location.search).get("q");
+            if (!q) return;
+            document.getElementById("userInput").value = q;
+            sendMessage();
+        })();
     </script>
 
 </body>
